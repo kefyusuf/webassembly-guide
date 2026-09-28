@@ -16,14 +16,14 @@ COPY examples/03-rust-wasi/Cargo.toml examples/03-rust-wasi/Cargo.lock ./
 COPY examples/03-rust-wasi/src ./src
 RUN cargo build --release --target wasm32-wasip1
 
-# --- stage 2: fetch the static musl wasmtime binary ---------------------------
+# --- stage 2: fetch the static wasmtime binary -------------------------------
 FROM alpine:3.20 AS wasmtime
-ARG WASMTIME_VERSION=1.259.0
+ARG WASMTIME_VERSION=49.0.1
 RUN apk add --no-cache curl xz \
  && curl -sL -o /tmp/w.tar.xz \
-      "https://github.com/bytecodealliance/wasmtime/releases/download/v${WASMTIME_VERSION}/wasmtime-v${WASMTIME_VERSION}-x86_64-linux-musl.tar.xz" \
+      "https://github.com/bytecodealliance/wasmtime/releases/download/v${WASMTIME_VERSION}/wasmtime-v${WASMTIME_VERSION}-x86_64-linux.tar.xz" \
  && tar -xJf /tmp/w.tar.xz -C /tmp \
- && mv "/tmp/wasmtime-v${WASMTIME_VERSION}-x86_64-linux-musl/wasmtime" /wasmtime
+ && mv "/tmp/wasmtime-v${WASMTIME_VERSION}-x86_64-linux/wasmtime" /wasmtime
 
 # --- stage 3: the runtime — just wasmtime + the module ------------------------
 FROM scratch
