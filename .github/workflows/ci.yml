@@ -145,6 +145,13 @@ jobs:
         working-directory: examples/16-async
         run: node test.mjs
 
+      # 17 — wasm-pack: full npm package lifecycle (pack → install → consume)
+      - name: Example 17 — wasm-pack
+        working-directory: examples/17-wasm-pack
+        run: |
+          bash build.sh
+          node test.mjs
+
       # Cross-language benchmark (uses artifacts of 01/02/04/05 built above)
       - name: Benchmark — cross-language fib
         run: |

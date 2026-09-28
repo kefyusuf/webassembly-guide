@@ -1,0 +1,16 @@
+[package]
+name = "wasm-pack-example"
+version = "0.1.0"
+edition = "2021"
+description = "A tiny Rust toolkit compiled to WebAssembly — demo package for the wasm-pack lifecycle"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.129"
+
+[profile.release]
+opt-level = "s"
+lto = true

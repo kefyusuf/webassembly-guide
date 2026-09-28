@@ -21,3 +21,6 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# Example 17 test-time consumer project
+examples/17-wasm-pack/consumer/
