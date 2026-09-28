@@ -100,6 +100,12 @@ jobs:
           bash build.sh
           node test.mjs
 
+      # Cross-language benchmark (uses artifacts of 01/02/04/05 built above)
+      - name: Benchmark — cross-language fib
+        run: |
+          node bench/compare.mjs
+          node bench/test.mjs
+
       # 09 — Python as a Wasm host (wasmtime-py, reuses example 03's module)
       - name: Example 09 — Python wasmtime host
         run: python examples/09-python-wasm/run_wasmtime.py

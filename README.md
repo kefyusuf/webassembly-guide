@@ -43,6 +43,17 @@
 
 Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
 
+| Language | fib(40) avg | Binary size |
+|---|---|---|
+| WAT (hand-written) | 0.0001 ms | **134 bytes** |
+| AssemblyScript | 0.0001 ms | 222 bytes |
+| Rust | 0.0001 ms | 15.0 KB |
+| Rust + WASI | — | 58.9 KB |
+| WasmGC (WAT) | — | 408 bytes |
+| Go (official) | — | 2.4 MB |
+
+*Speed is identical once compiled — size is where toolchains differ. Details in [bench/](bench/).*
+
 ---
 
 ## ⚡ 60-Second Summary
