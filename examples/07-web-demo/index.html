@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WebAssembly Demo — Multi-Language Modules</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; background: #111; color: #eee; }
+  h1 { font-size: 1.4rem; } h2 { font-size: 1.05rem; margin-top: 2rem; }
+  button { margin: .2rem .4rem .2rem 0; padding: .4rem .8rem; background: #2d6cdf; border: 0; color: #fff; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #4a82e8; }
+  pre { background: #1c1c1c; border: 1px solid #333; border-radius: 8px; padding: .8rem; min-height: 1.2rem; white-space: pre-wrap; }
+  .idle { color: #888; font-style: italic; }
+</style>
+</head>
+<body>
+<h1>WebAssembly Demo — modules compiled from different languages</h1>
+<p class="idle">If a module isn't built yet, run that example's build step; the buttons will work afterwards.</p>
+
+<h2>Rust (wasm32-unknown-unknown)</h2>
+<button id="rust-add">add(19, 23)</button>
+<button id="rust-fib">fib(90)</button>
+<button id="rust-greet">greet() — read text living in Rust memory</button>
+<pre id="out-rust" class="idle">not loaded</pre>
+
+<h2>Go (GOOS=js GOARCH=wasm)</h2>
+<button id="go-sum">goSum(6, 7)</button>
+<button id="go-fib">goFib(30)</button>
+<pre id="out-go" class="idle">not loaded</pre>
+
+<h2>AssemblyScript</h2>
+<button id="as-add">add(6, 7)</button>
+<button id="as-fib">fib(50)</button>
+<pre id="out-as" class="idle">not loaded</pre>
+
+<!-- The Go module writes into this id (see main.go) -->
+<div id="output"></div>
+
+<script type="module">
+const show = (id, text) => {
+  const el = document.getElementById(id);
+  el.classList.remove("idle");
+  el.textContent = text;
+};
+
+const bind = (button, fn) => {
+  document.getElementById(button).addEventListener("click", () => {
+    try { fn(); } catch (e) { console.error(e); }
+  });
+};
+
+// --- Rust: streaming load (instantiateStreaming) ----------------------------
+let rust = null;
+try {
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("../02-rust-web/dist/rust_web_example.wasm")
+  );
+  rust = instance.exports;
+  document.getElementById("out-rust").textContent = "module ready ✓";
+} catch {
+  document.getElementById("out-rust").textContent = "⚠ run 02-rust-web/build.sh first";
+}
+if (rust) {
+  bind("rust-add", () => show("out-rust", `add(19, 23) = ${rust.add(19, 23)}`));
+  bind("rust-fib", () => show("out-rust", `fib(90) = ${rust.fib(90)}`));
+  bind("rust-greet", () => {
+    const ptr = rust.greet_ptr(), len = rust.greet_len();
+    const text = new TextDecoder().decode(new Uint8Array(rust.memory.buffer, ptr, len));
+    show("out-rust", text);
+  });
+}
+
+// --- Go: the classic script-tag approach (wasm_exec.js glue) ----------------
+try {
+  await import("../04-go-wasm/dist/wasm_exec.js");
+  const go = new Go();
+  await WebAssembly.instantiateStreaming(fetch("../04-go-wasm/dist/main.wasm"), go.importObject);
+  await go.run();
+  document.getElementById("out-go").textContent = "module ready ✓";
+  bind("go-sum", () => show("out-go", `goSum(6, 7) = ${goSum(6, 7)}`));
+  bind("go-fib", () => show("out-go", `goFib(30) = ${goFib(30)}`));
+} catch {
+  document.getElementById("out-go").textContent = "⚠ run 04-go-wasm/build.sh first";
+}
+
+// --- AssemblyScript ----------------------------------------------------------
+let asw = null;
+try {
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("../05-assemblyscript/dist/index.wasm")
+  );
+  asw = instance.exports;
+  document.getElementById("out-as").textContent = "module ready ✓";
+} catch {
+  document.getElementById("out-as").textContent = "⚠ run npm run asbuild in 05-assemblyscript first";
+}
+if (asw) {
+  bind("as-add", () => show("out-as", `add(6, 7) = ${asw.add(6, 7)}`));
+  bind("as-fib", () => show("out-as", `fib(50) = ${asw.fib(50)}`));
+}
+</script>
+</body>
+</html>
