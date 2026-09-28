@@ -34,15 +34,16 @@ if [ ! -x "$TOOLS/$WT_NAME" ] && [ ! -x "$TOOLS/$WT_NAME.exe" ]; then
     *.zip)    unzip -o -q "$TMP/asset" -d "$TMP/out" ;;
     *.tar.xz) mkdir -p "$TMP/out" && tar -xJf "$TMP/asset" -C "$TMP/out" ;;
   esac
-  mv "$(find "$TMP/out" -name "$EXE" -type f | head -1)" "$TOOLS/$WT_NAME$( [ "$(uname -s)" = MINGW* ] 2>/dev/null && echo .exe || true )"
-  # ensure the .exe suffix on Windows
-  if [ "$(uname -s | head -c 5)" = "MINGW" ] && [ -x "$TOOLS/$WT_NAME" ]; then
-    mv "$TOOLS/$WT_NAME" "$TOOLS/$WT_NAME.exe"
-  fi
+  # keep the version in the file name; keep the .exe suffix on Windows
+  case "$ASSET" in
+    *.zip) SUFFIX=".exe" ;;
+    *)     SUFFIX="" ;;
+  esac
+  mv "$(find "$TMP/out" -name "$EXE" -type f | head -1)" "$TOOLS/$WT_NAME$SUFFIX"
   rm -rf "$TMP"
 fi
 
-if [ -x "$TOOLS/$WT_NAME" ]; then WT="$TOOLS/$WT_NAME"; else WT="$TOOLS/$WT_NAME.exe"; fi
+if [ -x "$TOOLS/$WT_NAME.exe" ]; then WT="$TOOLS/$WT_NAME.exe"; else WT="$TOOLS/$WT_NAME"; fi
 
 cp "target/wasm32-wasip1-threads/release/threads-example.wasm" dist/threads_example.wasm
 

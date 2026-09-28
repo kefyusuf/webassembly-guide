@@ -13,7 +13,7 @@ const root = path.resolve(dir, "..", "..");
 const wasmPath = path.join(dir, "dist", "threads_example.wasm");
 
 assert.ok(existsSync(wasmPath), "dist/threads_example.wasm missing — run ./build.sh first");
-const wt = path.join(root, ".tools", process.platform === "win32" ? "wasmtime-v25.exe" : "wasmtime-v25");
+const wt = path.join(root, ".tools", process.platform === "win32" ? "wasmtime-v25.0.0.exe" : "wasmtime-v25.0.0");
 assert.ok(existsSync(wt), "pinned wasmtime v25 missing — run ./build.sh first");
 
 // -W threads enables the wasm threads proposal; -S threads provides the
