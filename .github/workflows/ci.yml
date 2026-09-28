@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-and-test:
+    name: Build & test all examples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown,wasm32-wasip1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            examples/02-rust-web
+            examples/03-rust-wasi
+
+      - name: Install Python wasmtime
+        run: pip install wasmtime
+
+      # 01 — WAT basics (compiles via the wabt npm package)
+      - name: Example 01 — WAT basics
+        working-directory: examples/01-wat-basics
+        run: |
+          npm install --no-fund --no-audit
+          node run.mjs
+
+      # 02 — Rust → wasm32-unknown-unknown
+      - name: Example 02 — Rust web
+        working-directory: examples/02-rust-web
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 03 — Rust → wasm32-wasip1 (WASI)
+      - name: Example 03 — Rust WASI
+        working-directory: examples/03-rust-wasi
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 04 — Go → wasm
+      - name: Example 04 — Go
+        working-directory: examples/04-go-wasm
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 05 — AssemblyScript
+      - name: Example 05 — AssemblyScript
+        working-directory: examples/05-assemblyscript
+        run: |
+          npm install --no-fund --no-audit
+          npm run asbuild
+          node test.mjs
+
+      # 06 — C → Emscripten
+      - name: Example 06 — C / Emscripten
+        run: |
+          git clone --depth 1 https://github.com/emscripten-core/emsdk.git /tmp/emsdk
+          /tmp/emsdk/emsdk install latest
+          /tmp/emsdk/emsdk activate latest
+          source /tmp/emsdk/emsdk_env.sh
+          cd examples/06-c-emscripten
+          bash build.sh
+          node test.mjs
+
+      # 08 — raw WebAssembly API in Node (also cross-checks 01/02/05 artifacts)
+      - name: Example 08 — Node WebAssembly API
+        working-directory: examples/08-node-demo
+        run: node run.mjs
+
+      # 09 — Python as a Wasm host (wasmtime-py, reuses example 03's module)
+      - name: Example 09 — Python wasmtime host
+        run: python examples/09-python-wasm/run_wasmtime.py
