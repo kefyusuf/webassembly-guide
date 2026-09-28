@@ -1,0 +1,8 @@
+[package]
+name = "threads-example"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "threads-example"
+path = "src/main.rs"
