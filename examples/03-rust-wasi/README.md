@@ -20,6 +20,18 @@ node test.mjs
 wasmtime run --env WASI_USER=alice --dir=. dist/rust_wasi_example.wasm
 ```
 
+**No toolchain at all?** Run it from the prebuilt container — the module is
+compiled inside the image and executed by a static wasmtime binary:
+
+```bash
+# mounts the current folder into the sandbox as the module's "/"
+docker run --rm -v "$PWD":/data ghcr.io/kefyusuf/webassembly-guide
+# → wasi-demo.txt appears in your current folder
+```
+
+The image is ~25 MB (wasmtime + the module, on `FROM scratch`) and is built
+by CI from [Dockerfile](../../Dockerfile).
+
 ## What you learn
 
 1. **The `_start` convention** — WASI modules use a `_start` export to become a command-line program, like C's `main`.

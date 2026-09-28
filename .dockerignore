@@ -1,0 +1,5 @@
+# Build context is only what the Dockerfile needs
+*
+!examples/03-rust-wasi/Cargo.toml
+!examples/03-rust-wasi/Cargo.lock
+!examples/03-rust-wasi/src
