@@ -31,6 +31,18 @@ world calculator {
 
 4. **Inspect** with `node test.mjs`: `wasm-tools component wit` prints the component's interface — you'll see `export sum: func(values: list<f64>) -> f64` exactly as authored, plus the standard `wasi:*` imports the runtime offers.
 
+**Consume it from Python** (`test_component.py`) — the other half of the story:
+
+```python
+linker = Linker(store.engine)
+linker.add_wasip2()                                   # host provides wasi:*
+instance = linker.instantiate(store, comp)
+sum_func = instance.get_func(store, "sum")            # typed export
+total = sum_func(store, [1.5, 2.5, -4.0, 10.0])       # → 10.0
+```
+
+Python calls the Rust-built component's exports directly — `list<f64>` and `string` cross the boundary as native Python values (the test even round-trips `"Ayşe"` to prove Unicode correctness). Run with `pip install wasmtime && python test_component.py`.
+
 ## What you learn
 
 1. **WIT is the contract** — hosts see only the world's exports, typed and documented.
