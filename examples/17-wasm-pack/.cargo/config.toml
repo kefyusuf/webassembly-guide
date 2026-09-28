@@ -1,0 +1,6 @@
+# Windows runners: rustc's MSVC link.exe intermittently fails with LNK1104
+# (cannot open its own lnk{GUID}.tmp response file) when host build scripts
+# link in parallel. rust-lld avoids link.exe entirely; wasm-pack cannot
+# override linker settings declared here.
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld"

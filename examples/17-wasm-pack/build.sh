@@ -37,8 +37,6 @@ if [ -x "$TOOLS/$WP_NAME.exe" ]; then WP="$TOOLS/$WP_NAME.exe"; else WP="$TOOLS/
 #
 # Windows runners: rustc's MSVC link.exe intermittently fails with LNK1104
 # (cannot open its own lnk{GUID}.tmp response files) when linking the host
-# build scripts. rust-lld avoids link.exe entirely — set for both hosts.
-export RUSTFLAGS="-C linker=rust-lld"
 
 "$WP" build --release --target web --out-dir pkg || {
   echo "wasm-pack build failed (flaky Windows linker?) — retrying once..."
