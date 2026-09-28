@@ -4,6 +4,7 @@
 
 🌍 **Dil / Language:** [English](README.md) · [Türkçe](README.tr.md)
 
+[![CI](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml/badge.svg)](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml)
 ![Depth](https://img.shields.io/badge/depth-beginner%E2%86%92advanced-blue)
 ![Languages](https://img.shields.io/badge/langs-WAT%20%7C%20Rust%20%7C%20Go%20%7C%20C%2FC%2B%2B%20%7C%20AssemblyScript%20%7C%20Python%20%7C%20C%23-green)
 

@@ -4,6 +4,8 @@
 
 🌍 **Dil / Language:** [English](README.md) · **Türkçe**
 
+[![CI](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml/badge.svg)](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml)
+
 ---
 
 ## 📚 Türkçe Dokümantasyon
