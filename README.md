@@ -43,6 +43,9 @@
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC proposal) | WasmGC — GC'd structs/arrays living in the host garbage collector |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | The Component Model — a real wasm32-wasip2 component from WIT interfaces |
 | 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Scalar vs `v128` sum — a measured 2.7× speedup |
+| 14 | [examples/14-wasm-bindgen](examples/14-wasm-bindgen/) | Rust | "Production Rust" — wasm-bindgen: typed strings, structs as JS classes, ownership |
+| 15 | [examples/15-threads](examples/15-threads/) | Rust (wasi-threads) | Real threads in the sandbox — atomics verified to 100,000 |
+| 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Async around a synchronous core + verified WASI 0.3 async status |
 
 Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
 

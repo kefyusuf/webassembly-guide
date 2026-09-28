@@ -133,6 +133,18 @@ jobs:
           bash build.sh
           node test.mjs
 
+      # 15 — threads via wasi-threads (pinned wasmtime v25; legacy proposal)
+      - name: Example 15 — Threads
+        working-directory: examples/15-threads
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 16 — async around a synchronous core (worker_threads)
+      - name: Example 16 — Async
+        working-directory: examples/16-async
+        run: node test.mjs
+
       # Cross-language benchmark (uses artifacts of 01/02/04/05 built above)
       - name: Benchmark — cross-language fib
         run: |

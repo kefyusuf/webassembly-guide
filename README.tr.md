@@ -39,6 +39,9 @@
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC önerisi) | WasmGC — ana GC'sinde yaşayan struct/array tipleri |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | Component Model — WIT arabiriminden gerçek wasm32-wasip2 component |
 | 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Skaler vs `v128` toplama — ölçülmüş 2,7x hızlanma |
+| 14 | [examples/14-wasm-bindgen](examples/14-wasm-bindgen/) | Rust | "Üretim Rust" — wasm-bindgen: tipli string'ler, sınıf olan struct'lar, ownership |
+| 15 | [examples/15-threads](examples/15-threads/) | Rust (wasi-threads) | Sandbox içinde gerçek thread'ler — 100.000 atomik artışla doğrulanmış |
+| 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Senkron çekirdek çevresinde async + doğrulanmış WASI 0.3 durumu |
 
 Örneklerin hepsi derlenip test edildi (06'nın derlemesi Emscripten SDK gerektirir).
 

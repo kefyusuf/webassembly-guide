@@ -17,6 +17,9 @@ Each folder has its own README. The numbers suggest a reading order.
 | 11 | [11-wasmgc](11-wasmgc/) | WAT (GC proposal) → wasm-tools | none (script downloads wasm-tools) | ✅ tested in Node |
 | 12 | [12-component-model](12-component-model/) | Rust + WIT → wasm32-wasip2 component | `rustup target add wasm32-wasip2`; wasm-tools (auto-downloaded) | ✅ tested (component validated, WIT inspected) |
 | 13 | [13-simd](13-simd/) | WAT (SIMD) → wasm-tools | none (script downloads wasm-tools) | ✅ tested in Node (scalar vs v128, 2.7× measured) |
+| 14 | [14-wasm-bindgen](14-wasm-bindgen/) | Rust → wasm-bindgen 0.2.129 | rustup + cargo (CLI auto-installed) | ✅ tested in Node (strings, class, ownership) |
+| 15 | [15-threads](15-threads/) | Rust → wasm32-wasip1-threads | rustup; pinned wasmtime v25 (auto-downloaded) | ✅ tested via wasmtime (100,000 atomic increments) |
+| 16 | [16-async](16-async/) | Node worker_threads + example 02 module | Node.js; example 02 built | ✅ tested (freeze/no-freeze measured) |
 
 ## General notes
 
