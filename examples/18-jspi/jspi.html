@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JSPI — Synchronous Wasm, Asynchronous JavaScript</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; background: #111; color: #eee; }
+  h1 { font-size: 1.4rem; }
+  button { margin: .2rem .4rem .2rem 0; padding: .5rem 1rem; background: #2d6cdf; border: 0; color: #fff; border-radius: 6px; cursor: pointer; }
+  button:disabled { background: #444; cursor: not-allowed; }
+  pre { background: #1c1c1c; border: 1px solid #333; border-radius: 8px; padding: .8rem; min-height: 1.2rem; white-space: pre-wrap; }
+  .idle { color: #888; font-style: italic; }
+  code { background: #2a2a2a; padding: .1rem .35rem; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>JSPI — Synchronous Wasm, Asynchronous JavaScript</h1>
+<p>A synchronous wasm module calls a JS import <em>twice</em>; each import awaits 200 ms.
+With JSPI, wasm <strong>suspends</strong> instead of blocking the page — the button below
+stays interactive (and the spinner keeps spinning) during the entire 400 ms.</p>
+<p>The wasm source contains <code>no</code> async anything — see <a
+href="https://github.com/kefyusuf/webassembly-guide/blob/main/examples/18-jspi/jspi.wat">jspi.wat</a>.</p>
+
+<button id="run" disabled>detecting JSPI…</button>
+<span id="support"></span>
+<pre id="out" class="idle">waiting for JSPI check…</pre>
+
+<div id="anim" style="width:40px;height:40px;border:4px solid #2d6cdf;border-top-color:transparent;border-radius:50%;display:none;animation:spin 1s linear infinite"></div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script type="module">
+const out = document.getElementById("out");
+const runBtn = document.getElementById("run");
+const support = document.getElementById("support");
+const anim = document.getElementById("anim");
+const show = (t) => { out.classList.remove("idle"); out.textContent = t; };
+
+// --- support detection ---------------------------------------------------------
+const hasJSPI = typeof WebAssembly.Suspending === "function" &&
+                typeof WebAssembly.promising === "function";
+if (hasJSPI) {
+  support.innerHTML = "✓ JSPI available in this browser";
+  runBtn.textContent = "run() — 400 ms of suspended wasm";
+  runBtn.disabled = false;
+} else {
+  support.innerHTML = "⚠ JSPI not available here. Enable <code>chrome://flags/#enable-experimental-webassembly-features</code> (Chrome/Edge) or use Node 26+: <code>node test.mjs</code>";
+  show("JSPI unavailable in this browser — see the hint above.");
+}
+
+const spinnerOn = (on) => (anim.style.display = on ? "block" : "none");
+
+runBtn.addEventListener("click", async () => {
+  // Re-instantiate per click with a fresh Suspending import bound to THIS
+  // click's timestamps:
+  const getValue = new WebAssembly.Suspending(async (ms) => {
+    await new Promise((r) => setTimeout(r, 200));
+    return ms;
+  });
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("./jspi.wasm", { cache: "no-store" }),
+    { env: { get_value: getValue } }
+  );
+  const run = WebAssembly.promising(instance.exports.run);
+
+  spinnerOn(true);
+  runBtn.disabled = true;
+  const t0 = performance.now();
+  const result = await run();
+  const ms = performance.now() - t0;
+  spinnerOn(false);
+  runBtn.disabled = false;
+  show(`run() = ${result}   took ${ms.toFixed(0)} ms (two 200 ms async awaits inside a sync wasm call)\n` +
+       `the spinner above kept spinning the whole time — the page never froze.`);
+});
+</script>
+</body>
+</html>

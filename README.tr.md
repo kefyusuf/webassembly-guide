@@ -42,6 +42,8 @@
 | 14 | [examples/14-wasm-bindgen](examples/14-wasm-bindgen/) | Rust | "Üretim Rust" — wasm-bindgen: tipli string'ler, sınıf olan struct'lar, ownership |
 | 15 | [examples/15-threads](examples/15-threads/) | Rust (wasi-threads) | Sandbox içinde gerçek thread'ler — 100.000 atomik artışla doğrulanmış |
 | 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Senkron çekirdek çevresinde async + doğrulanmış WASI 0.3 durumu |
+| 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: doğrulanmış tam npm paket yaşam döngüsü |
+| 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | JS promise'lerini bekleyen senkron wasm ([canlı demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
 
 Örneklerin hepsi derlenip test edildi (06'nın derlemesi Emscripten SDK gerektirir).
 

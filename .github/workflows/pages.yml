@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
 
       - uses: actions/setup-go@v5
         with:
@@ -34,7 +34,7 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32-unknown-unknown,wasm32-wasip1
 
       - name: Build Rust module (02)
         working-directory: examples/02-rust-web
@@ -58,6 +58,10 @@ jobs:
         working-directory: examples/13-simd
         run: bash build.sh
 
+      - name: Build JSPI module (18)
+        working-directory: examples/18-jspi
+        run: bash build.sh
+
       - name: Render docs to HTML
         run: node scripts/render-docs.mjs _pages/docs
 
@@ -67,12 +71,15 @@ jobs:
         run: |
           mkdir -p _pages/07-web-demo
           cp examples/07-web-demo/index.html _pages/07-web-demo/
-          mkdir -p _pages/02-rust-web _pages/04-go-wasm _pages/05-assemblyscript _pages/11-wasmgc _pages/13-simd
+          mkdir -p _pages/02-rust-web _pages/04-go-wasm _pages/05-assemblyscript _pages/11-wasmgc _pages/13-simd _pages/18-jspi
           cp -r examples/02-rust-web/dist _pages/02-rust-web/
           cp -r examples/04-go-wasm/dist _pages/04-go-wasm/
           cp -r examples/05-assemblyscript/dist _pages/05-assemblyscript/
           cp -r examples/11-wasmgc/dist _pages/11-wasmgc/
           cp -r examples/13-simd/dist _pages/13-simd/
+          mkdir -p _pages/18-jspi
+          cp examples/18-jspi/jspi.html _pages/18-jspi/
+          cp examples/18-jspi/dist/jspi.wasm _pages/18-jspi/
           cp .github/pages-index.html _pages/index.html
 
       - uses: actions/configure-pages@v5

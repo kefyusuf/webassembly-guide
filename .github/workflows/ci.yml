@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
 
       - uses: actions/setup-go@v5
         with:
@@ -148,6 +148,13 @@ jobs:
       # 17 — wasm-pack: full npm package lifecycle (pack → install → consume)
       - name: Example 17 — wasm-pack
         working-directory: examples/17-wasm-pack
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 18 — JSPI (requires Node 26+: JSPI on by default)
+      - name: Example 18 — JSPI
+        working-directory: examples/18-jspi
         run: |
           bash build.sh
           node test.mjs

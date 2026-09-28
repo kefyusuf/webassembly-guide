@@ -20,6 +20,8 @@ Each folder has its own README. The numbers suggest a reading order.
 | 14 | [14-wasm-bindgen](14-wasm-bindgen/) | Rust → wasm-bindgen 0.2.129 | rustup + cargo (CLI auto-installed) | ✅ tested in Node (strings, class, ownership) |
 | 15 | [15-threads](15-threads/) | Rust → wasm32-wasip1-threads | rustup; pinned wasmtime v25 (auto-downloaded) | ✅ tested via wasmtime (100,000 atomic increments) |
 | 16 | [16-async](16-async/) | Node worker_threads + example 02 module | Node.js; example 02 built | ✅ tested (freeze/no-freeze measured) |
+| 17 | [17-wasm-pack](17-wasm-pack/) | Rust → wasm-pack 0.15 → npm pkg | rustup; wasm-pack (auto-downloaded) | ✅ tested (pack → install → consume) |
+| 18 | [18-jspi](18-jspi/) | WAT → wasm-tools + JSPI | Node 26+ or Chrome/Edge 137+ | ✅ tested in Node 26 (suspension measured) |
 
 ## General notes
 

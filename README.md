@@ -46,6 +46,8 @@
 | 14 | [examples/14-wasm-bindgen](examples/14-wasm-bindgen/) | Rust | "Production Rust" — wasm-bindgen: typed strings, structs as JS classes, ownership |
 | 15 | [examples/15-threads](examples/15-threads/) | Rust (wasi-threads) | Real threads in the sandbox — atomics verified to 100,000 |
 | 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Async around a synchronous core + verified WASI 0.3 async status |
+| 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: the full npm package lifecycle, verified without publishing |
+| 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | Synchronous wasm that awaits JS promises ([live demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
 
 Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
 
