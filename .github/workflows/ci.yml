@@ -122,6 +122,10 @@ jobs:
           node bench/compare.mjs
           node bench/test.mjs
 
+      # Documentation hygiene: every relative markdown link must resolve
+      - name: Check markdown links
+        run: node scripts/check-links.mjs
+
       # 09 — Python as a Wasm host (wasmtime-py, reuses example 03's module)
       - name: Example 09 — Python wasmtime host
         run: python examples/09-python-wasm/run_wasmtime.py

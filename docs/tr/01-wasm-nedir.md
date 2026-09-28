@@ -64,7 +64,7 @@ Bu tasarım bilinçlidir: Wasm basit ve küçük kalır, güvenlik modeli netle�
 
 ## "Web" içermesine rağmen web'e özgü değildir
 
-İsim tarihsel bir kazaydı; bugün Wasm'ın büyüme alanının büyük kısmı **tarayıcı dışı**. [WASI](06-ekosistem.md#wasi) (WebAssembly System Interface) sayesinde Wasm modülleri dosya sistemi, saat, ağ gibi sistem kaynaklarına standart bir arayüzle erişebilir. Bu da Wasm'ı şunlara uygun hale getirir:
+İsim tarihsel bir kazaydı; bugün Wasm'ın büyüme alanının büyük kısmı **tarayıcı dışı**. [WASI](06-ekosistem.md#wasi-webassembly-system-interface) (WebAssembly System Interface) sayesinde Wasm modülleri dosya sistemi, saat, ağ gibi sistem kaynaklarına standart bir arayüzle erişebilir. Bu da Wasm'ı şunlara uygun hale getirir:
 
 - Sunucusuz (serverless) fonksiyonlar / edge computing
 - Plugin mimarileri (veritabanı eklentileri, proxy filtreleri)
