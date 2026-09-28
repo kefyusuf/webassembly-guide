@@ -45,20 +45,22 @@ Tarayıcıda Python bilimsel iş mi?          → Pyodide
 Sunucu/edge'de izole modül mü?             → Rust + wasmtime (yaygın), Go + Wasm, C# + wasmCloud
 ```
 
-## Boyut karşılaştırması (yaklaşık, "merhaba dünya" tarzı modül)
+## Boyut karşılaştırması (ölçülmüş)
 
-| Dil / zincir | Yaklaşık boyut |
-|---|---|
-| Elle yazılmış WAT | ~100 bayt |
-| Rust (minimal, `no_std`, opt) | ~1–10 KB |
-| AssemblyScript | ~2–5 KB |
-| C (Emscripten, minimal) | ~10–30 KB |
-| TinyGo | ~10–50 KB |
-| Go (resmî hedef) | ~1–2 MB (runtime dahil) |
-| Blazor WebAssembly | ~5–10 MB (ilk indirme; AOT ve trimming ile azaltılabilir) |
-| Pyodide | ~7–10 MB (çekirdek; kütüphaneler ekstra) |
+Aşağıdaki tablo, bu deponun [bench/](../../bench/) klasöründen gelen **gerçek ölçümlerdir** — aynı iterative `fib` her toolchain ile derlendi (Rust'ın 15 KB'ı panic/format mekanizmasını içerir; `no_std` derleme ~1 KB'a düşer):
 
-Bu tablo bir kalite ölçüsü değil, **ilk yükleme maliyeti** göstergesidir. Sunucu/edge senaryosunda boyut daha da kritiktir.
+| Dil / zincir | Ölçülen boyut | Not |
+|---|---|---|
+| Elle yazılmış WAT | 134 bayt | döngü örneği (örnek 01) |
+| AssemblyScript | 222 bayt | release derleme (örnek 05) |
+| Rust (wasm32-unknown-unknown) | 15 KB | std + panics dahil (örnek 02) |
+| Rust + WASI (wasip1) | 59 KB | std'nin WASI shim'leri dahil (örnek 03) |
+| WasmGC (WAT struct/array) | 408 bayt | örnek 11 |
+| Go (resmî hedef) | 2,4 MB | GC'li runtime'ın tamamı taşınır (örnek 04) |
+| Blazor WebAssembly | ~5–10 MB | ilk indirme; AOT + trimming ile azaltılır (burada ölçülmedi) |
+| Pyodide | ~7–10 MB | çekirdek; kütüphaneler ekstra (burada ölçülmedi) |
+
+Bu tablo bir kalite ölçüsü değil, **ilk yükleme maliyeti** göstergesidir. Sunucu/edge senaryosunda boyut daha da kritiktir. Ayrıca aynı basit algoritmanın *çalışma hızı* tüm zincirlerde aynı ölçüldü — farklar başlatma, instantiation ve vektörize edilebilir iş yüklerinde çıkar, derlenmiş döngü hızında değil.
 
 ## Araç zinciri kısa sözlüğü
 

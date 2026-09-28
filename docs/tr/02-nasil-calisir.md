@@ -100,7 +100,7 @@ Derlenmiş modül `WebAssembly.Module` objesidir; `instantiate` bağlanacak impo
 2. **Kompakt format:** Ayrıştırma ve doğrulama maliyeti düşük; akış derlemesiyle indirme gecikmesi gizlenir.
 3. **Öngörülebilir performans:** GC duraklaması yok (WasmGC kullanmıyorsanız), deopt yok → gerçek zamanlı uygulamalar için JS'den öngörülebilir.
 
-Gerçekçi beklenti: native kodun **%70–95'i** civarı hız (iş yüküne göre). JS'e göre tipik olarak **2–20x** hız.
+Gerçekçi beklenti: native kodun **%70–95'i** civarı hız (iş yüküne göre). JS'e göre tipik olarak **2–20x** hız. *(Bu aralıklar topluluk raporlarıdır; bu depo native-vs-wasm karşılaştırması yapmaz — [bench/](../../bench/) ölçtüğümüz şeydir: toolchain'ler arası boyut ve hız.)*
 
 ## Sunucuda yaşam döngüsü (WASI)
 

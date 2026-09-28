@@ -99,7 +99,7 @@ The compiled artifact is a `WebAssembly.Module`; `instantiate` takes the imports
 2. **Compact format:** parsing and validation are cheap; streaming compilation hides download latency.
 3. **Predictable performance:** no GC pauses (unless using WasmGC), no deopts — which matters for real-time workloads.
 
-Realistic expectation: **70–95%** of native speed (workload-dependent). Typically **2–20×** faster than JS.
+Realistic expectation: **70–95%** of native speed (workload-dependent). Typically **2–20×** faster than JS. *(These are community-reported ranges — this repo does not benchmark native-vs-wasm; [bench/](../../bench/) measures what we can: cross-toolchain size and speed.)*
 
 ## Lifecycle outside the browser (WASI)
 

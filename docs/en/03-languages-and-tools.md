@@ -45,20 +45,22 @@ Python-based scientific work in the browser?     → Pyodide
 Isolated modules on servers/edge?                → Rust + wasmtime (common), Go + Wasm, C# + wasmCloud
 ```
 
-## Size comparison (rough, hello-world-class module)
+## Size comparison (measured)
 
-| Language / toolchain | Approx. size |
-|---|---|
-| Hand-written WAT | ~100 bytes |
-| Rust (minimal, `no_std`, optimized) | ~1–10 KB |
-| AssemblyScript | ~2–5 KB |
-| C (Emscripten, minimal) | ~10–30 KB |
-| TinyGo | ~10–50 KB |
-| Go (official target) | ~1–2 MB (runtime included) |
-| Blazor WebAssembly | ~5–10 MB (first load; reduced by AOT + trimming) |
-| Pyodide | ~7–10 MB (core; libraries extra) |
+The table below shows **real numbers** from this repository's [bench/](../../bench/) — the same iterative `fib` built by each toolchain (Rust's 15 KB includes its panic/formatting machinery; a `no_std` build shrinks to ~1 KB):
 
-This table is a **first-load cost** indicator, not a quality measure. In server/edge scenarios size matters even more.
+| Language / toolchain | Measured size | Notes |
+|---|---|---|
+| Hand-written WAT | 134 bytes | loops example (example 01) |
+| AssemblyScript | 222 bytes | release build (example 05) |
+| Rust (wasm32-unknown-unknown) | 15 KB | std + panics included (example 02) |
+| Rust + WASI (wasip1) | 59 KB | std's WASI shims included (example 03) |
+| WasmGC (WAT structs/arrays) | 408 bytes | example 11 |
+| Go (official target) | 2.4 MB | full GC'd runtime ships along (example 04) |
+| Blazor WebAssembly | ~5–10 MB | first load; reduced by AOT + trimming (not benchmarked here) |
+| Pyodide | ~7–10 MB | core; libraries extra (not benchmarked here) |
+
+This table is a **first-load cost** indicator, not a quality measure. In server/edge scenarios size matters even more. Note that *execution speed* of the same simple algorithm was identical across toolchains — differences appear in startup, instantiation, and vectorizable workloads, not in compiled loop speed.
 
 ## Toolchain glossary
 
