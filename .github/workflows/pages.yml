@@ -50,16 +50,26 @@ jobs:
           npm install --no-fund --no-audit
           npm run asbuild
 
+      - name: Build WasmGC module (11)
+        working-directory: examples/11-wasmgc
+        run: bash build.sh
+
+      - name: Build SIMD module (13)
+        working-directory: examples/13-simd
+        run: bash build.sh
+
       # Assemble the site preserving the demo's relative fetch paths
       # (07-web-demo/index.html fetches ../02-rust-web/dist/… etc.)
       - name: Assemble site
         run: |
           mkdir -p _pages/07-web-demo
           cp examples/07-web-demo/index.html _pages/07-web-demo/
-          mkdir -p _pages/02-rust-web _pages/04-go-wasm _pages/05-assemblyscript
+          mkdir -p _pages/02-rust-web _pages/04-go-wasm _pages/05-assemblyscript _pages/11-wasmgc _pages/13-simd
           cp -r examples/02-rust-web/dist _pages/02-rust-web/
           cp -r examples/04-go-wasm/dist _pages/04-go-wasm/
           cp -r examples/05-assemblyscript/dist _pages/05-assemblyscript/
+          cp -r examples/11-wasmgc/dist _pages/11-wasmgc/
+          cp -r examples/13-simd/dist _pages/13-simd/
           cp .github/pages-index.html _pages/index.html
 
       - uses: actions/configure-pages@v5

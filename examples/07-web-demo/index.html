@@ -32,6 +32,14 @@
 <button id="as-fib">fib(50)</button>
 <pre id="out-as" class="idle">not loaded</pre>
 
+<h2>WasmGC (Wasm 3.0)</h2>
+<button id="gc-point">new_point(3, 4) — a struct in the browser's GC</button>
+<pre id="out-gc" class="idle">not loaded</pre>
+
+<h2>SIMD (v128) vs scalar</h2>
+<button id="simd-run">sum 1M elements — scalar vs v128</button>
+<pre id="out-simd" class="idle">not loaded</pre>
+
 <!-- The Go module writes into this id (see main.go) -->
 <div id="output"></div>
 
@@ -114,6 +122,60 @@ try {
 if (asw) {
   bind("as-add", () => show("out-as", `add(6, 7) = ${asw.add(6, 7)}`));
   bind("as-fib", () => show("out-as", `fib(50) = ${asw.fib(50)}`));
+}
+
+// --- WasmGC: a struct living in the browser's garbage collector --------------
+let gc = null;
+try {
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("../11-wasmgc/dist/gc.wasm", { cache: "no-store" })
+  );
+  gc = instance.exports;
+  document.getElementById("out-gc").textContent = "module ready ✓";
+} catch {
+  document.getElementById("out-gc").textContent = "⚠ run 11-wasmgc/build.sh first";
+}
+if (gc) {
+  bind("gc-point", () => {
+    const p = gc.new_point(3, 4);
+    const before = `x=${gc.get_x(p)}, y=${gc.get_y(p)}`;
+    gc.set_x(p, 100);
+    show("out-gc",
+      `new_point(3,4) → ${before};  after set_x(100) → x=${gc.get_x(p)}` +
+      `  (no linear memory involved — the struct lives in the browser's GC)`);
+  });
+}
+
+// --- SIMD: the same sum, scalar vs v128 ---------------------------------------
+let simd = null;
+try {
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("../13-simd/dist/simd.wasm", { cache: "no-store" })
+  );
+  simd = instance.exports;
+  document.getElementById("out-simd").textContent = "module ready ✓";
+} catch {
+  document.getElementById("out-simd").textContent = "⚠ run 13-simd/build.sh first";
+}
+if (simd) {
+  bind("simd-run", () => {
+    const N = 1 << 20; // elements (multiple of 4)
+    const pages = Math.ceil((N * 4) / 65536);
+    simd.memory.grow(pages - simd.memory.buffer.byteLength / 65536);
+    const data = new Int32Array(simd.memory.buffer);
+    for (let i = 0; i < N; i++) data[i] = i % 1000;
+    const t = (fn) => {
+      for (let i = 0; i < 5; i++) fn(); // warm-up
+      const t0 = performance.now();
+      for (let i = 0; i < 20; i++) fn();
+      return (performance.now() - t0) / 20;
+    };
+    const scalar = t(() => simd.sum_scalar(0, N));
+    const vector = t(() => simd.sum_simd(0, N));
+    show("out-simd",
+      `scalar: ${scalar.toFixed(3)} ms   v128: ${vector.toFixed(3)} ms   ` +
+      `speedup: ${(scalar / vector).toFixed(2)}x   (sum = ${simd.sum_simd(0, N)})`);
+  });
 }
 </script>
 </body>
