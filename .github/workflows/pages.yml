@@ -58,6 +58,9 @@ jobs:
         working-directory: examples/13-simd
         run: bash build.sh
 
+      - name: Render docs to HTML
+        run: node scripts/render-docs.mjs _pages/docs
+
       # Assemble the site preserving the demo's relative fetch paths
       # (07-web-demo/index.html fetches ../02-rust-web/dist/… etc.)
       - name: Assemble site

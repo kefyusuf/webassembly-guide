@@ -2,21 +2,38 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>WebAssembly Guide — Live Demo</title>
+<title>WebAssembly Guide — Live Demo & Docs</title>
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; background: #111; color: #eee; }
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 3rem auto; padding: 0 1rem; background: #111; color: #eee; }
   a { color: #6ea8ff; }
   .card { background: #1c1c1c; border: 1px solid #333; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
   code { background: #2a2a2a; padding: .1rem .4rem; border-radius: 4px; }
+  h1 { font-size: 1.5rem; }
 </style>
-<meta http-equiv="refresh" content="0; url=./07-web-demo/">
 </head>
 <body>
 <h1>WebAssembly Guide</h1>
 <div class="card">
-  <p>Redirecting to the <a href="./07-web-demo/">live browser demo</a>…</p>
-  <p>Modules compiled from <strong>Rust</strong>, <strong>Go</strong> and <strong>AssemblyScript</strong>, running in your browser.</p>
-  <p>Repository: <a href="https://github.com/kefyusuf/webassembly-guide">github.com/kefyusuf/webassembly-guide</a></p>
+  <h2>▶ Live browser demo</h2>
+  <p>Modules compiled from <strong>Rust</strong>, <strong>Go</strong>, <strong>AssemblyScript</strong>, plus <strong>WasmGC</strong> structs and a <strong>SIMD vs scalar</strong> speed test — running in your browser: <a href="./07-web-demo/">open the demo</a>.</p>
+</div>
+<div class="card">
+  <h2>📖 Documentation (English)</h2>
+  <ul>
+    <li><a href="./docs/01-what-is-wasm.html">What is WebAssembly?</a></li>
+    <li><a href="./docs/02-how-it-works.html">How it works</a></li>
+    <li><a href="./docs/03-languages-and-tools.html">Languages and tools</a></li>
+    <li><a href="./docs/04-pros-and-cons.html">Pros and cons</a></li>
+    <li><a href="./docs/05-industry-usage.html">Industry usage</a></li>
+    <li><a href="./docs/06-ecosystem.html">Ecosystem: WASI, Wasm 3.0, Component Model</a></li>
+    <li><a href="./docs/07-learning-path.html">Learning path</a></li>
+  </ul>
+</div>
+<div class="card">
+  <h2>📦 Repository</h2>
+  <p>13 verified examples in 8 languages, a cross-language benchmark, bilingual docs (EN/TR):<br>
+  <a href="https://github.com/kefyusuf/webassembly-guide">github.com/kefyusuf/webassembly-guide</a></p>
+  <p>Run the WASI example with no toolchain: <code>docker run --rm -v "$PWD":/data ghcr.io/kefyusuf/webassembly-guide</code></p>
 </div>
 </body>
 </html>
