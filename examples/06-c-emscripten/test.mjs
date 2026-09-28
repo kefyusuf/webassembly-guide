@@ -21,10 +21,10 @@ console.log("== C → Wasm (Emscripten) ==");
 console.log("add(6, 7) =", module._add(6, 7));
 console.log("fib(50) =", module._fib(50)); // BigInt return
 
-// Read the string from the heap (utf8ToString is exported via
+// Read the string from the heap (UTF8ToString is exported via
 // EXPORTED_RUNTIME_METHODS in build.sh)
 const ptr = module._greet();
-console.log("greet =", module.utf8ToString(ptr));
+console.log("greet =", module.UTF8ToString(ptr));
 
 // Zero-copy: JS Uint8Array → C doubles it → read back
 const data = Uint8Array.from([10, 200, 255, 100]);
