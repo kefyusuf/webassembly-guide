@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pyodide — Python in the Browser</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; background: #111; color: #eee; }
+  pre { background: #1c1c1c; border: 1px solid #333; border-radius: 8px; padding: 1rem; min-height: 120px; white-space: pre-wrap; }
+  button { padding: .5rem 1rem; background: #3776ab; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h1>Pyodide: full Python in the browser (CPython→Wasm)</h1>
+<p>Nothing is sent to a server; Python runs inside the Wasm sandbox. First load is ~10 MB (once).</p>
+<button id="run" disabled>Loading…</button>
+<pre id="output">Preparing Pyodide…</pre>
+
+<script type="module">
+const output = document.getElementById("output");
+const log = (t) => (output.textContent += t + "\n");
+
+const button = document.getElementById("run");
+button.textContent = "Downloading Pyodide…";
+const pyodide = await loadPyodide();  // from the CDN (serve this file over http!)
+
+button.textContent = "Run the Python code";
+button.disabled = false;
+
+button.addEventListener("click", async () => {
+  output.textContent = "";
+  // 1) Pure Python
+  log("$ Python version: " + pyodide.runPython("import sys; sys.version.split()[0]"));
+  log("$ Compute: " + pyodide.runPython("sum(i*i for i in range(1000))"));
+
+  // 2) NumPy — compiled C libraries running inside Wasm
+  await pyodide.loadPackage("numpy");
+  log(pyodide.runPython(`
+import numpy as np
+a = np.arange(10)
+f"NumPy {np.__version__}: {a} → sum {a.sum()}"
+`));
+
+  // 3) DOM interop: from Python into JS
+  log("$ document.title read: " + pyodide.runPython(`
+from js import document
+document.title
+`));
+});
+</script>
+
+<!-- Pyodide loader (CDN) -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.27/full/pyodide.js"></script>
+</body>
+</html>
