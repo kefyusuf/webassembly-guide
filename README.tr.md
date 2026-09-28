@@ -4,6 +4,8 @@
 
 🌍 **Dil / Language:** [English](README.md) · **Türkçe**
 
+▶ **Canlı demo (kurulumsuz):** [kefyusuf.github.io/webassembly-guide/07-web-demo](https://kefyusuf.github.io/webassembly-guide/07-web-demo/) — Rust/Go/AssemblyScript modülleri tarayıcınızda çalışıyor
+
 [![CI](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml/badge.svg)](https://github.com/kefyusuf/webassembly-guide/actions/workflows/ci.yml)
 
 ---

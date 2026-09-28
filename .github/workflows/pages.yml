@@ -1,0 +1,72 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy-demo:
+    name: Build & deploy the browser demo
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Build Rust module (02)
+        working-directory: examples/02-rust-web
+        run: bash build.sh
+
+      - name: Build Go module (04)
+        working-directory: examples/04-go-wasm
+        run: bash build.sh
+
+      - name: Build AssemblyScript module (05)
+        working-directory: examples/05-assemblyscript
+        run: |
+          npm install --no-fund --no-audit
+          npm run asbuild
+
+      # Assemble the site preserving the demo's relative fetch paths
+      # (07-web-demo/index.html fetches ../02-rust-web/dist/… etc.)
+      - name: Assemble site
+        run: |
+          mkdir -p _pages/07-web-demo
+          cp examples/07-web-demo/index.html _pages/07-web-demo/
+          mkdir -p _pages/02-rust-web _pages/04-go-wasm _pages/05-assemblyscript
+          cp -r examples/02-rust-web/dist _pages/02-rust-web/
+          cp -r examples/04-go-wasm/dist _pages/04-go-wasm/
+          cp -r examples/05-assemblyscript/dist _pages/05-assemblyscript/
+          cp .github/pages-index.html _pages/index.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _pages
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
