@@ -6,13 +6,21 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build-and-test:
-    name: Build & test all examples
-    runs-on: ubuntu-latest
+    name: Build & test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -77,8 +85,9 @@ jobs:
           npm run asbuild
           node test.mjs
 
-      # 06 — C → Emscripten
+      # 06 — C → Emscripten (Linux only: emsdk setup is slow on Windows)
       - name: Example 06 — C / Emscripten
+        if: runner.os == 'Linux'
         run: |
           git clone --depth 1 https://github.com/emscripten-core/emsdk.git /tmp/emsdk
           /tmp/emsdk/emsdk install latest
