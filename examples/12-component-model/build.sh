@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 
 REPO_ROOT="$(cd ../.. && pwd)"
 TOOLS="$REPO_ROOT/.tools"
-mkdir -p dist
+mkdir -p dist "$TOOLS"
 
 # Fetch wasm-tools once per machine (cache lives in <repo>/.tools, gitignored)
 if [ ! -x "$TOOLS/wasm-tools" ] && [ ! -x "$TOOLS/wasm-tools.exe" ]; then
