@@ -52,7 +52,7 @@ const bind = (button, fn) => {
 let rust = null;
 try {
   const { instance } = await WebAssembly.instantiateStreaming(
-    fetch("../02-rust-web/dist/rust_web_example.wasm")
+    fetch("../02-rust-web/dist/rust_web_example.wasm", { cache: "no-store" })
   );
   rust = instance.exports;
   document.getElementById("out-rust").textContent = "module ready ✓";
@@ -70,14 +70,32 @@ if (rust) {
 }
 
 // --- Go: the classic script-tag approach (wasm_exec.js glue) ----------------
+// wasm_exec.js is a classic script (an IIFE that sets globalThis.Go);
+// inject it with a <script> tag rather than a module import.
 try {
-  await import("../04-go-wasm/dist/wasm_exec.js");
+  await new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "../04-go-wasm/dist/wasm_exec.js";
+    s.onload = resolve;
+    s.onerror = () => reject(new Error("wasm_exec.js failed to load"));
+    document.head.appendChild(s);
+  });
   const go = new Go();
-  await WebAssembly.instantiateStreaming(fetch("../04-go-wasm/dist/main.wasm"), go.importObject);
-  await go.run();
-  document.getElementById("out-go").textContent = "module ready ✓";
-  bind("go-sum", () => show("out-go", `goSum(6, 7) = ${goSum(6, 7)}`));
-  bind("go-fib", () => show("out-go", `goFib(30) = ${goFib(30)}`));
+  // Do NOT await go.run(): in the browser the Go program keeps living
+  // (select{}), so the promise only resolves if/when the program exits.
+  const { instance } = await WebAssembly.instantiateStreaming(
+    fetch("../04-go-wasm/dist/main.wasm", { cache: "no-store" }), go.importObject
+  );
+  go.run(instance);
+  // main() registers goSum/goFib on the global scope when it starts;
+  // poll briefly until they appear before wiring the buttons.
+  const bindGo = () => {
+    if (typeof globalThis.goSum !== "function") { setTimeout(bindGo, 50); return; }
+    document.getElementById("out-go").textContent = "module ready ✓";
+    bind("go-sum", () => show("out-go", `goSum(6, 7) = ${goSum(6, 7)}`));
+    bind("go-fib", () => show("out-go", `goFib(30) = ${goFib(30)}`));
+  };
+  bindGo();
 } catch {
   document.getElementById("out-go").textContent = "⚠ run 04-go-wasm/build.sh first";
 }
@@ -86,7 +104,7 @@ try {
 let asw = null;
 try {
   const { instance } = await WebAssembly.instantiateStreaming(
-    fetch("../05-assemblyscript/dist/index.wasm")
+    fetch("../05-assemblyscript/dist/index.wasm", { cache: "no-store" })
   );
   asw = instance.exports;
   document.getElementById("out-as").textContent = "module ready ✓";

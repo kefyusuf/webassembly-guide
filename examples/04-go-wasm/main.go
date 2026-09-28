@@ -27,19 +27,31 @@ func main() {
 		}
 	}
 
-	// 3) When running under Node (via wasm_exec), self-test and exit cleanly;
-	//    in the browser, keep living so the exports stay callable.
-	if js.Global().Get("process").IsUndefined() {
+	// 3) Node (wasm_exec) and browsers differ: detect Node via
+	//    process.versions.node — some browser embedders define a partial
+	//    `process` shim (possibly with null fields!), so probe safely:
+	//    syscall/js panics if you call Get() on a null value.
+	inNode := false
+	p := js.Global().Get("process")
+	if p.Type() == js.TypeObject {
+		v := p.Get("versions")
+		if v.Type() == js.TypeObject && !v.Get("node").IsUndefined() {
+			inNode = true
+		}
+	}
+
+	if !inNode {
+		// Browser: keep the runtime alive so exports stay callable.
 		fmt.Println("Go WebAssembly ready: you can call goSum(6,7), goFib(30).")
 		select {}
 	}
 
+	// Node: self-test and exit cleanly.
 	fmt.Println("== Go → Wasm ==")
 	fmt.Println("goSum(6, 7) =", goSumCall(6, 7))
 	fmt.Println("goFib(30) =", goFibCall(30))
 	fmt.Println("goFib(50) =", goFibCall(50))
 
-	// Exit cleanly in the Node test (this code never runs in a browser)
 	os.Exit(0)
 }
 
