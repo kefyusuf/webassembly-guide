@@ -45,6 +45,8 @@ jobs:
           workspaces: |
             examples/02-rust-web
             examples/03-rust-wasi
+            examples/12-component-model
+            examples/14-wasm-bindgen
 
       - name: Install Python wasmtime
         run: pip install wasmtime
@@ -115,10 +117,18 @@ jobs:
         run: |
           bash build.sh
           node test.mjs
+          python test_component.py
 
       # 13 — SIMD: scalar vs v128 sum (via wasm-tools)
       - name: Example 13 — SIMD
         working-directory: examples/13-simd
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 14 — wasm-bindgen ("production Rust")
+      - name: Example 14 — wasm-bindgen
+        working-directory: examples/14-wasm-bindgen
         run: |
           bash build.sh
           node test.mjs
