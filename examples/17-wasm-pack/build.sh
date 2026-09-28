@@ -34,7 +34,12 @@ if [ -x "$TOOLS/$WP_NAME.exe" ]; then WP="$TOOLS/$WP_NAME.exe"; else WP="$TOOLS/
 
 # --release + --target web: ESM glue for browsers and modern Node.
 # wasm-pack also runs wasm-opt (binaryen) — it downloads its own copy.
-"$WP" build --release --target web --out-dir pkg
+# Windows runners hit flaky LNK1104 temp-file linker races; retry once.
+"$WP" build --release --target web --out-dir pkg || {
+  echo "wasm-pack build failed (flaky Windows linker?) — retrying once..."
+  sleep 2
+  "$WP" build --release --target web --out-dir pkg
+}
 
 echo "pkg/ ready — npm-publish-ready package (glue + .wasm + .d.ts + package.json)"
 echo "Test: node test.mjs"
