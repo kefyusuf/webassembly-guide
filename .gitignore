@@ -1,0 +1,20 @@
+# Derleme çıktıları
+target/
+pkg/
+dist/
+build/
+*.wasm
+*.wat.js
+node_modules/
+
+# Go
+*.out
+main.wasm
+
+# Python
+__pycache__/
+.venv/
+
+# IDE
+.vscode/
+.idea/
