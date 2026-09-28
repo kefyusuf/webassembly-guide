@@ -15,6 +15,9 @@ main.wasm
 __pycache__/
 .venv/
 
+# Tools downloaded by example build scripts
+.tools/
+
 # IDE
 .vscode/
 .idea/

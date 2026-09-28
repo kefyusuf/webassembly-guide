@@ -38,8 +38,10 @@
 | 08 | [examples/08-node-demo](examples/08-node-demo/) | Node.js | The raw `WebAssembly` API, zero dependencies |
 | 09 | [examples/09-python-wasm](examples/09-python-wasm/) | Python | Both directions: Python **host** (wasmtime-py) and Python **inside** Wasm (Pyodide) |
 | 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | Blazor WebAssembly and Native AOT + WASI |
+| 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC proposal) | WasmGC — GC'd structs/arrays living in the host garbage collector |
+| 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | The Component Model — a real wasm32-wasip2 component from WIT interfaces |
 
-Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine).
+Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
 
 ---
 

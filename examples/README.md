@@ -14,6 +14,8 @@ Each folder has its own README. The numbers suggest a reading order.
 | 08 | [08-node-demo](08-node-demo/) | Node WebAssembly API | Node.js (nothing else) | ✅ tested |
 | 09 | [09-python-wasm](09-python-wasm/) | Python (wasmtime-py + Pyodide) | `pip install wasmtime` | ✅ tested with wasmtime-py |
 | 10 | [10-csharp-blazor](10-csharp-blazor/) | C# (Blazor / Native AOT WASI) | .NET SDK | command guide; projects come from `dotnet new` |
+| 11 | [11-wasmgc](11-wasmgc/) | WAT (GC proposal) → wasm-tools | none (script downloads wasm-tools) | ✅ tested in Node |
+| 12 | [12-component-model](12-component-model/) | Rust + WIT → wasm32-wasip2 component | `rustup target add wasm32-wasip2`; wasm-tools (auto-downloaded) | ✅ tested (component validated, WIT inspected) |
 
 ## General notes
 

@@ -34,6 +34,8 @@
 | 08 | [examples/08-node-demo](examples/08-node-demo/) | Node.js | Sunucu tarafında `WebAssembly` API'sinin doğrudan kullanımı |
 | 09 | [examples/09-python-wasm](examples/09-python-wasm/) | Python | İki yön: Python→Wasm **çalıştırıcı** (wasmtime-py) ve Wasm içinde Python (Pyodide) |
 | 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | .NET ekosisteminde Blazor WebAssembly ve Native AOT |
+| 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC önerisi) | WasmGC — ana GC'sinde yaşayan struct/array tipleri |
+| 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | Component Model — WIT arabiriminden gerçek wasm32-wasip2 component |
 
 Örneklerin hepsi derlenip test edildi (06'nın derlemesi Emscripten SDK gerektirir).
 
