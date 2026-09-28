@@ -100,6 +100,13 @@ jobs:
           bash build.sh
           node test.mjs
 
+      # 12 — Component Model (WIT → wasm32-wasip2 component)
+      - name: Example 12 — Component Model
+        working-directory: examples/12-component-model
+        run: |
+          bash build.sh
+          node test.mjs
+
       # Cross-language benchmark (uses artifacts of 01/02/04/05 built above)
       - name: Benchmark — cross-language fib
         run: |
