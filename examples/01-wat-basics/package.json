@@ -1,0 +1,12 @@
+{
+  "name": "wat-temeller",
+  "version": "1.0.0",
+  "description": "Elle yazılmış WebAssembly metin formatı (WAT) örnekleri",
+  "type": "module",
+  "scripts": {
+    "start": "node run.mjs"
+  },
+  "dependencies": {
+    "wabt": "^1.0.36"
+  }
+}
