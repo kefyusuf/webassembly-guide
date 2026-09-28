@@ -1,0 +1,15 @@
+{
+  "name": "assemblyscript-ornegi",
+  "version": "1.0.0",
+  "description": "AssemblyScript → WebAssembly örneği",
+  "type": "module",
+  "scripts": {
+    "asbuild:release": "asc index.ts --outFile dist/index.wasm --optimize",
+    "asbuild": "npm run asbuild:release",
+    "test": "node test.mjs",
+    "start": "npm run asbuild && node test.mjs"
+  },
+  "dependencies": {
+    "assemblyscript": "^0.28.3"
+  }
+}
