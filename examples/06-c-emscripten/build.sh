@@ -6,10 +6,12 @@ cd "$(dirname "$0")"
 
 mkdir -p dist
 
-# 1) A pure Wasm module (works in Node/bundlers; does not emit its own HTML)
+# 1) A pure Wasm module as an ES module (works in Node 18+ and bundlers)
+#    EXPORT_ES6 avoids mixing require() with top-level await in the glue.
 emcc main.c -O3 \
   -s MODULARIZE=1 \
   -s EXPORT_NAME=createModule \
+  -s EXPORT_ES6=1 \
   -s ENVIRONMENT=web,node \
   -o dist/c_module.js
 

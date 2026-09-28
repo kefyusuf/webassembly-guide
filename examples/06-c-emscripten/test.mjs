@@ -1,6 +1,6 @@
 // Example 06 test — runs the Emscripten output in Node.
 // Build first: ./build.sh  (requires the Emscripten SDK)
-import { readFileSync, existsSync } from "node:fs";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,10 +12,8 @@ if (!existsSync(jsPath)) {
   process.exit(1);
 }
 
-// The factory function produced with MODULARIZE=1
-const createModule = new Function(
-  `${readFileSync(jsPath, "utf8")}; return createModule;`
-)();
+// The ES-module factory produced with MODULARIZE=1 + EXPORT_ES6=1
+const { default: createModule } = await import("./dist/c_module.js");
 
 const module = await createModule();
 
