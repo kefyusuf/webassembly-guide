@@ -13,6 +13,7 @@ emcc main.c -O3 \
   -s EXPORT_NAME=createModule \
   -s EXPORT_ES6=1 \
   -s "EXPORTED_RUNTIME_METHODS=['UTF8ToString']" \
+  -s "EXPORTED_FUNCTIONS=['_malloc','_free']" \
   -s ENVIRONMENT=web,node \
   -o dist/c_module.js
 
