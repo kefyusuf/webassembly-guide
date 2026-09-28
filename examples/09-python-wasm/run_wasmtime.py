@@ -5,6 +5,12 @@
 import sys
 from pathlib import Path
 
+# Windows consoles default to a legacy codepage (cp1252); force UTF-8 so the
+# arrow/emoji in output never crash the script itself.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 module_path = Path(__file__).parent.parent / "03-rust-wasi" / "dist" / "rust_wasi_example.wasm"
 if not module_path.exists():
     sys.exit("Build first: cd ../03-rust-wasi && ./build.sh")
