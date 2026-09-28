@@ -7,7 +7,7 @@ Tek pakette standartlaşan başlıca özellikler:
 - **WasmGC** — struct/array tipleri + tarayıcı GC entegrasyonu (Java, Kotlin, Dart hedeflerini mümkün kılar).
 - **64-bit bellek (memory64)** — 4 GiB üstü bellek.
 - **Çoklu bellek (multi-memory)** — bir modül birden fazla lineer bellek kullanabilir.
-- **Taşınabilir SIMD (fixed-width SIMD)** — `v128` komutları; medya/kripto iş yüklerinde 4–8x hızlanma.
+- **Taşınabilir SIMD (fixed-width SIMD)** — `v128` komutları; medya/kripto iş yüklerinde 4–8x hızlanma (bu deponun bellek-bound toplaması 2,7x ölçtü — bkz. [examples/13-simd](../../examples/13-simd/)).
 - **Relaxed SIMD** — donanım varyasyonundan faydalanan SIMD.
 - **Tail call** — derleyiciler için önemli.
 - **Exception handling** — dil istisnalarının Wasm seviyesinde taşınması.

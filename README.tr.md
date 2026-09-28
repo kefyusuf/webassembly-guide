@@ -38,6 +38,7 @@
 | 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | .NET ekosisteminde Blazor WebAssembly ve Native AOT |
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC önerisi) | WasmGC — ana GC'sinde yaşayan struct/array tipleri |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | Component Model — WIT arabiriminden gerçek wasm32-wasip2 component |
+| 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Skaler vs `v128` toplama — ölçülmüş 2,7x hızlanma |
 
 Örneklerin hepsi derlenip test edildi (06'nın derlemesi Emscripten SDK gerektirir).
 

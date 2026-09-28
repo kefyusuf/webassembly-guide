@@ -42,6 +42,7 @@
 | 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | Blazor WebAssembly and Native AOT + WASI |
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC proposal) | WasmGC — GC'd structs/arrays living in the host garbage collector |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | The Component Model — a real wasm32-wasip2 component from WIT interfaces |
+| 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Scalar vs `v128` sum — a measured 2.7× speedup |
 
 Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
 

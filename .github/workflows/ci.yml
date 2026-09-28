@@ -116,6 +116,13 @@ jobs:
           bash build.sh
           node test.mjs
 
+      # 13 — SIMD: scalar vs v128 sum (via wasm-tools)
+      - name: Example 13 — SIMD
+        working-directory: examples/13-simd
+        run: |
+          bash build.sh
+          node test.mjs
+
       # Cross-language benchmark (uses artifacts of 01/02/04/05 built above)
       - name: Benchmark — cross-language fib
         run: |

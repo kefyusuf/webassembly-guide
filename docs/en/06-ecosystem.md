@@ -7,7 +7,7 @@ Headline features standardized in a single release:
 - **WasmGC** — struct/array types + browser GC integration (enables the Java, Kotlin, Dart targets).
 - **64-bit memory (memory64)** — beyond 4 GiB.
 - **Multi-memory** — a module may use several linear memories.
-- **Portable SIMD (fixed-width)** — `v128` instructions; 4–8× speedups in media/crypto workloads.
+- **Portable SIMD (fixed-width)** — `v128` instructions; 4–8× speedups in media/crypto workloads (this repo's memory-bound sum measures 2.7× — see [examples/13-simd](../../examples/13-simd/)).
 - **Relaxed SIMD** — exploiting hardware variation.
 - **Tail call** — important for compilers.
 - **Exception handling** — carrying language exceptions at the Wasm level.
