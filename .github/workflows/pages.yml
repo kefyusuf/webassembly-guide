@@ -78,7 +78,7 @@ jobs:
           cp -r examples/11-wasmgc/dist _pages/11-wasmgc/
           cp -r examples/13-simd/dist _pages/13-simd/
           mkdir -p _pages/18-jspi
-          cp examples/18-jspi/jspi.html _pages/18-jspi/
+          cp examples/18-jspi/jspi.html _pages/18-jspi/index.html
           cp examples/18-jspi/dist/jspi.wasm _pages/18-jspi/
           cp .github/pages-index.html _pages/index.html
 
