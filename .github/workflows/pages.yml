@@ -80,7 +80,7 @@ jobs:
           mkdir -p _pages/18-jspi
           cp examples/18-jspi/jspi.html _pages/18-jspi/index.html
           cp examples/18-jspi/dist/jspi.wasm _pages/18-jspi/
-          cp .github/pages-index.html _pages/index.html
+          cp scripts/templates/pages-index.html _pages/index.html
 
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
 
