@@ -24,3 +24,6 @@ __pycache__/
 
 # Example 17 test-time consumer project
 examples/17-wasm-pack/consumer/
+
+# Local security hook state (Mimosa plugin)
+.mimosa/
