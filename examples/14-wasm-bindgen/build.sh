@@ -3,7 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-VERSION=0.2.129   # must match wasm-bindgen in Cargo.toml, exactly
+VERSION=0.2.130   # must match wasm-bindgen in Cargo.toml, exactly
 
 # wasm-bindgen-cli: installed once per machine (cargo caches it)
 if ! command -v wasm-bindgen >/dev/null 2>&1; then
