@@ -1,0 +1,51 @@
+# Dependabot — keeps example manifests and CI actions up to date.
+# Note: the wasmtime version in the Dockerfile is an ARG, not a base image,
+# so the docker ecosystem will not bump it — update WASMTIME_VERSION manually.
+version: 2
+updates:
+  # Workflow actions (ci.yml, pages.yml, docker.yml)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # Dockerfile base images
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # npm manifests (examples 01, 05)
+  - package-ecosystem: "npm"
+    directories:
+      - "/examples/01-wat-basics"
+      - "/examples/05-assemblyscript"
+    schedule:
+      interval: "weekly"
+    groups:
+      npm-minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # Cargo manifests (examples 02, 03, 12, 14, 15, 17)
+  - package-ecosystem: "cargo"
+    directories:
+      - "/examples/02-rust-web"
+      - "/examples/03-rust-wasi"
+      - "/examples/12-component-model"
+      - "/examples/14-wasm-bindgen"
+      - "/examples/15-threads"
+      - "/examples/17-wasm-pack"
+    schedule:
+      interval: "weekly"
+    groups:
+      cargo-minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # Go module (example 04)
+  - package-ecosystem: "gomod"
+    directory: "/examples/04-go-wasm"
+    schedule:
+      interval: "weekly"
