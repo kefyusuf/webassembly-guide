@@ -1,0 +1,35 @@
+# EditorConfig — https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Repo tooling and CI
+[*.{js,mjs,yml,yaml,json,toml}]
+indent_style = space
+indent_size = 2
+
+# Shell scripts (examples' build.sh)
+[*.sh]
+indent_style = space
+indent_size = 2
+
+# Markdown: trailing spaces are a hard line break — keep them
+[*.md]
+trim_trailing_whitespace = false
+
+# Rust / C#: let rustfmt / .NET conventions win (they default to 4)
+[*.{rs,cs,razor,csproj}]
+indent_style = space
+indent_size = 4
+
+# WAT text format
+[*.wat]
+indent_style = space
+indent_size = 2
+
+# Go: gofmt uses tabs
+[*.go]
+indent_style = tab
