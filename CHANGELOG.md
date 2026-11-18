@@ -19,6 +19,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - LICENSE now names the copyright holder
 
+## [1.1.0] — 2026-09-28
+
+### Added
+
+- 8 new examples (11–18): WasmGC, Component Model (WIT → wasm32-wasip2,
+  with a Python wasmtime host), SIMD (measured scalar vs `v128` speedup),
+  wasm-bindgen, threads (`wasi-threads`), async (worker_threads contrast),
+  wasm-pack (full npm package lifecycle, verified without publishing) and
+  JSPI (sync wasm awaiting JS promises)
+- Live browser demo extended: WasmGC and SIMD modules in 07-web-demo, a
+  dedicated JSPI demo, and rendered documentation served on GitHub Pages
+- Docker image publishing to ghcr (wasmtime runtime, `FROM scratch`)
+- CI hardened: windows-latest added to the build matrix, Node 26, and a
+  markdown link checker run on every push
+
 ## [1.0.0] — 2026-09-28
 
 ### Added
@@ -34,5 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker image running the WASI example under wasmtime (FROM scratch runtime)
 - GitHub Pages deployment with live browser demos (07-web-demo, 18-jspi)
 
-[Unreleased]: https://github.com/kefyusuf/webassembly-guide/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/kefyusuf/webassembly-guide/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/kefyusuf/webassembly-guide/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kefyusuf/webassembly-guide/releases/tag/v1.0.0
