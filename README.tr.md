@@ -35,7 +35,7 @@
 | 07 | [examples/07-web-demo](examples/07-web-demo/) | HTML/JS | Tüm modülleri tarayıcıda tek sayfada çalıştıran demo |
 | 08 | [examples/08-node-demo](examples/08-node-demo/) | Node.js | Sunucu tarafında `WebAssembly` API'sinin doğrudan kullanımı |
 | 09 | [examples/09-python-wasm](examples/09-python-wasm/) | Python | İki yön: Python→Wasm **çalıştırıcı** (wasmtime-py) ve Wasm içinde Python (Pyodide) |
-| 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | .NET ekosisteminde Blazor WebAssembly ve Native AOT |
+| 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | Blazor WebAssembly — minimal C# SPA'sı (CI'da derlenir); Native AOT + WASI ve wasmCloud rehber olarak |
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC önerisi) | WasmGC — ana GC'sinde yaşayan struct/array tipleri |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | Component Model — WIT arabiriminden gerçek wasm32-wasip2 component |
 | 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Skaler vs `v128` toplama — ölçülmüş 2,7x hızlanma |
@@ -45,7 +45,7 @@
 | 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: doğrulanmış tam npm paket yaşam döngüsü |
 | 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | JS promise'lerini bekleyen senkron wasm ([canlı demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
 
-Örneklerin hepsi derlenip test edildi (06'nın derlemesi Emscripten SDK gerektirir).
+Örneklerin hepsi CI'da ubuntu **ve** windows üzerinde derlenip test edilir (06'nın Emscripten derlemesi CI'da yalnızca Linux'ta; 10'un çıktısı .NET runtime'ı ve C# assembly'sinin Wasm magic byte'larına kadar doğrulanır). Çapraz-dil benchmark `bench/` altındadır.
 
 ---
 
@@ -74,6 +74,7 @@
 # Node.js yüklüyse: Node demosu hemen çalışır (kurulum gerekmez)
 cd examples/08-node-demo && node run.mjs
 
+# JSPI örneği (18) için Node 26+ gerekir
 # Tarayıcı demosu için: örnekleri derleyin (examples/README.md)
 ```
 

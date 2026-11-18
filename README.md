@@ -39,7 +39,7 @@
 | 07 | [examples/07-web-demo](examples/07-web-demo/) | HTML/JS | One browser page running all the modules |
 | 08 | [examples/08-node-demo](examples/08-node-demo/) | Node.js | The raw `WebAssembly` API, zero dependencies |
 | 09 | [examples/09-python-wasm](examples/09-python-wasm/) | Python | Both directions: Python **host** (wasmtime-py) and Python **inside** Wasm (Pyodide) |
-| 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | Blazor WebAssembly and Native AOT + WASI |
+| 10 | [examples/10-csharp-blazor](examples/10-csharp-blazor/) | C# | Blazor WebAssembly — a minimal C# SPA, CI-verified build; Native AOT + WASI and wasmCloud as guides |
 | 11 | [examples/11-wasmgc](examples/11-wasmgc/) | WAT (GC proposal) | WasmGC — GC'd structs/arrays living in the host garbage collector |
 | 12 | [examples/12-component-model](examples/12-component-model/) | Rust + WIT | The Component Model — a real wasm32-wasip2 component from WIT interfaces |
 | 13 | [examples/13-simd](examples/13-simd/) | WAT (SIMD) | Scalar vs `v128` sum — a measured 2.7× speedup |
@@ -49,7 +49,7 @@
 | 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: the full npm package lifecycle, verified without publishing |
 | 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | Synchronous wasm that awaits JS promises ([live demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
 
-Every example was built and verified (06 ships with source + test; compiling it requires the Emscripten SDK, which wasn't available on the authoring machine). A cross-language benchmark lives in [bench/](bench/).
+Every example is built and tested in CI on ubuntu **and** windows (06's Emscripten compile is Linux-only there; 10's bundle is verified down to the Wasm magic bytes of the .NET runtime and the C# assembly). A cross-language benchmark lives in [bench/](bench/).
 
 | Language | fib(40) avg | Binary size |
 |---|---|---|
@@ -85,7 +85,7 @@ Every example was built and verified (06 ships with source + test; compiling it 
 
 ## 🚀 Quick Start
 
-Start with zero setup (Node.js only):
+Start with zero setup (Node.js only; Node 26+ for the JSPI example):
 
 ```bash
 git clone <repo-url> wasm-repo && cd wasm-repo

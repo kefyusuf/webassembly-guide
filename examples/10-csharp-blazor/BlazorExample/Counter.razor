@@ -1,0 +1,11 @@
+@* The same component shown in the example README — C# driving the DOM
+   from inside Wasm. *@
+@page "/counter"
+
+<button @onclick="Increment">Click me</button>
+<p>Count: @count</p>
+
+@code {
+    private int count = 0;
+    private void Increment() => count++;   // this C# runs in the browser as Wasm
+}

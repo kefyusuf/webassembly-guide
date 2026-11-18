@@ -15,6 +15,10 @@ main.wasm
 __pycache__/
 .venv/
 
+# .NET (example 10)
+bin/
+obj/
+
 # Tools downloaded by example build scripts
 .tools/
 

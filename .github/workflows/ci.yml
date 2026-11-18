@@ -175,3 +175,15 @@ jobs:
       # 09 — Python as a Wasm host (wasmtime-py, reuses example 03's module)
       - name: Example 09 — Python wasmtime host
         run: python examples/09-python-wasm/run_wasmtime.py
+
+      # 10 — C# / Blazor WebAssembly (minimal SPA → static publish bundle;
+      #      test.mjs checks the runtime and the app assembly as real .wasm)
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Example 10 — Blazor WebAssembly
+        working-directory: examples/10-csharp-blazor
+        run: |
+          bash build.sh
+          node test.mjs

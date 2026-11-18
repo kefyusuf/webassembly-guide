@@ -13,11 +13,11 @@ Each folder has its own README. The numbers suggest a reading order.
 | 07 | [07-web-demo](07-web-demo/) | Browser (all together) | examples 02, 04, 05 built | static page; open with `python -m http.server` |
 | 08 | [08-node-demo](08-node-demo/) | Node WebAssembly API | Node.js (nothing else) | ✅ tested |
 | 09 | [09-python-wasm](09-python-wasm/) | Python (wasmtime-py + Pyodide) | `pip install wasmtime` | ✅ tested with wasmtime-py |
-| 10 | [10-csharp-blazor](10-csharp-blazor/) | C# (Blazor / Native AOT WASI) | .NET SDK | command guide; projects come from `dotnet new` |
+| 10 | [10-csharp-blazor](10-csharp-blazor/) | C# (Blazor WebAssembly) | .NET 10 SDK | ✅ tested (publish → static bundle; runtime + C# assembly verified as `.wasm`) |
 | 11 | [11-wasmgc](11-wasmgc/) | WAT (GC proposal) → wasm-tools | none (script downloads wasm-tools) | ✅ tested in Node |
 | 12 | [12-component-model](12-component-model/) | Rust + WIT → wasm32-wasip2 component | `rustup target add wasm32-wasip2`; wasm-tools (auto-downloaded) | ✅ tested (component validated, WIT inspected) |
 | 13 | [13-simd](13-simd/) | WAT (SIMD) → wasm-tools | none (script downloads wasm-tools) | ✅ tested in Node (scalar vs v128, 2.7× measured) |
-| 14 | [14-wasm-bindgen](14-wasm-bindgen/) | Rust → wasm-bindgen 0.2.129 | rustup + cargo (CLI auto-installed) | ✅ tested in Node (strings, class, ownership) |
+| 14 | [14-wasm-bindgen](14-wasm-bindgen/) | Rust → wasm-bindgen 0.2.130 | rustup + cargo (CLI auto-installed) | ✅ tested in Node (strings, class, ownership) |
 | 15 | [15-threads](15-threads/) | Rust → wasm32-wasip1-threads | rustup; pinned wasmtime v25 (auto-downloaded) | ✅ tested via wasmtime (100,000 atomic increments) |
 | 16 | [16-async](16-async/) | Node worker_threads + example 02 module | Node.js; example 02 built | ✅ tested (freeze/no-freeze measured) |
 | 17 | [17-wasm-pack](17-wasm-pack/) | Rust → wasm-pack 0.15 → npm pkg | rustup; wasm-pack (auto-downloaded) | ✅ tested (pack → install → consume) |

@@ -1,21 +1,47 @@
 # Example 10 — C# / .NET in the WebAssembly World
 
-.NET's Wasm story has two main paths. Instead of heavy project skeletons, this folder provides **copy-paste commands and a decision guide** (both paths start from a single `dotnet new` command).
+.NET's Wasm story has three paths. **Path 1 ships here as a real, minimal
+project** (`BlazorExample/`) — built and asserted in CI on both OSes.
+Paths 2 and 3 are copy-paste guides: they need SDKs beyond plain .NET
+(the external WASI SDK for AOT; the wasmCloud toolchain), so they stay as
+documented commands rather than half-working skeletons.
 
-## Path 1 — Blazor WebAssembly (the most common)
+## Path 1 — Blazor WebAssembly (real project, CI-verified)
 
-An SPA framework: the **entire .NET runtime ships to the browser**, you write UI in C#, and the DOM is driven from Wasm memory.
+`BlazorExample/` is a hand-minimized Blazor WebAssembly SPA — the five files
+that matter, without the `dotnet new blazorwasm` template's boilerplate:
 
-```bash
-dotnet new blazorwasm -o BlazorExample
-cd BlazorExample
-dotnet run
-# → a full C# SPA on https://localhost:xxxx
+```
+BlazorExample/
+├── BlazorExample.csproj     Microsoft.NET.Sdk.BlazorWebAssembly, packages 10.0.15
+├── Program.cs               WebAssemblyHostBuilder — mounts App into #app
+├── App.razor                the page markup, renders <Counter />
+├── Counter.razor            the counter below — C# driving the DOM
+└── wwwroot/index.html       static host page loading _framework/blazor.webassembly.js
 ```
 
-When: the team is C#, and you want UI + business logic in the browser. The cost: ~5–10 MB first download (reduced by AOT + trimming).
+```bash
+bash build.sh      # dotnet publish → dist/ (self-contained static bundle)
+node test.mjs      # asserts the bundle's real artifacts
+# local run with the DevServer instead:
+cd BlazorExample && dotnet run
+```
 
-A sample component (the counter ships with the template — `Counter.razor`):
+`test.mjs` verifies three layers of the publish output:
+
+1. the host page mounts `#app`;
+2. **the .NET runtime itself is a Wasm module** — `dotnet.native.<hash>.wasm`,
+   checked byte-for-byte for the `\0asm` magic;
+3. **your C# assembly arrives as Wasm too** — .NET 10's publish layout emits
+   every managed assembly as a hashed `.wasm` file
+   (`BlazorExample.<hash>.wasm`), i.e. your C# literally compiles to
+   WebAssembly modules the runtime loads at startup.
+
+An SPA framework: the **entire .NET runtime ships to the browser**, you write
+UI in C#, and the DOM is driven from Wasm memory. The cost: ~5–10 MB first
+download (reduced by AOT + trimming).
+
+The counter component (verbatim from `Counter.razor`):
 
 ```razor
 @page "/counter"
@@ -30,7 +56,8 @@ A sample component (the counter ships with the template — `Counter.razor`):
 
 ## Path 2 — Native AOT + WASI (outside the browser, small output)
 
-.NET 9/10 can Native-AOT-compile to the `wasi-wasm` RID: container/edge scenarios.
+.NET 9/10 can Native-AOT-compile to the `wasi-wasm` RID: container/edge
+scenarios.
 
 ```bash
 dotnet new console -o WasiExample
@@ -42,6 +69,12 @@ dotnet publish
 # output: bin/Release/net10.0/wasi-wasm/publish/App.wasm
 wasmtime run App.wasm
 ```
+
+> **Note:** the AOT publish requires the external **WASI SDK**
+> (`WASI_SDK_PATH` pointing at a wasi-sdk release) in addition to the .NET
+> SDK — that is why this path is a guide here rather than a CI-verified
+> project. The interpreter (non-AOT) `wasi-wasm` publish works with the .NET
+> SDK alone.
 
 ## Path 3 — wasmCloud / the Component Model
 
@@ -61,3 +94,4 @@ Writing Wasm **components** in C# for distributed systems: see the [`wasmCloud`]
 - Blazor's first download is large → use AOT (`<RunAOTCompilation>true`) and trimming.
 - The JS interop bridge (`IJSRuntime`) — every DOM call crosses the bridge; the "batch your calls" rule from the Rust example applies here too.
 - The WASI/Native AOT path is still maturing (WASI 0.3 integration in progress); Blazor is the most production-safe choice today.
+- .NET 10 recommends the `wasm-tools` workload for optimized Blazor builds (`dotnet workload install wasm-tools`) — this example stays SDK-only on purpose.
