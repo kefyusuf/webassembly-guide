@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest a new example, topic or improvement
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of improvement?
+      options:
+        - New example (a Wasm feature/toolchain not covered yet)
+        - Extend an existing example
+        - Documentation (en/tr)
+        - Tooling / CI / demo site
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should it teach, and why does it fit this repo's pedagogical spectrum?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing examples/docs that come close, and what they miss.

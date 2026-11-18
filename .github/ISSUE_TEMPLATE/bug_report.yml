@@ -1,0 +1,43 @@
+name: Bug report
+description: Something in the docs or an example is wrong or broken
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report an issue. Please fill in the details below.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Documentation (docs/en or docs/tr)
+        - A specific example (01–18)
+        - bench/
+        - CI / Docker / Pages
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: example
+    attributes:
+      label: Which example / page?
+      placeholder: e.g. examples/13-simd or docs/en/02-how-it-works.md
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Expected vs actual. Include the exact command you ran.
+      placeholder: |
+        cd examples/14-wasm-bindgen && bash build.sh
+        → wasm-bindgen-cli version mismatch …
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: e.g. Windows 11, Node 26, Rust 1.90, .NET 10 — or "GitHub Actions"
+    validations:
+      required: true

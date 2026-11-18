@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & discussions
+    url: https://github.com/kefyusuf/webassembly-guide/discussions
+    about: Not sure whether something is a bug? Ask here first.
