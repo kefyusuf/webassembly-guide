@@ -17,7 +17,7 @@ COPY examples/03-rust-wasi/src ./src
 RUN cargo build --release --target wasm32-wasip1
 
 # --- stage 2: fetch the static wasmtime binary -------------------------------
-FROM alpine:3.20 AS wasmtime
+FROM alpine:3.24 AS wasmtime
 ARG WASMTIME_VERSION=49.0.1
 RUN apk add --no-cache curl xz \
  && curl -sL -o /tmp/w.tar.xz \
