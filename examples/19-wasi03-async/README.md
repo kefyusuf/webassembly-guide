@@ -54,10 +54,13 @@ node test.mjs
   `[waitable-set-*]` builtins — inspect with `wasm-tools print`). The guest
   suspends with `wit_bindgen::yield_async().await` (the canonical
   `task.yield`); the host regains control between polls. Nothing blocks.
-- **A self-waking `poll_fn` is NOT a suspension.** An earlier draft returned
-  `Poll::Pending` + `wake_by_ref()` from a hand-rolled future and hung:
-  without a real `task.yield`, the host never regains control. Use the
-  generated runtime helpers (`wit_bindgen::yield_async`).
+- **`wasmtime --invoke` cannot drive async exports.** Invoking the async
+  function directly hung even with `-W component-model-async=y` — the CLI's
+  invoke path doesn't pump the async task loop. The supported path is a
+  command component (`wasi:cli/run@0.3.0`): plain `wasmtime run` awaits the
+  async task natively. (wit-bindgen's `yield_async()` is itself just
+  `Pending` + `wake_by_ref()` — the yield primitive is simple; what matters
+  is that the host pumps tasks, which `run` does and `--invoke` doesn't.)
 - **`wasmtime --invoke` is sync-only for async exports.** Invoking the async
   function directly hangs even with `-W component-model-async=y`. The
   supported path is a command component (`wasi:cli/run@0.3.0`), which the
