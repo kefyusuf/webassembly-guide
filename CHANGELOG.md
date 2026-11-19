@@ -7,17 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-11-19
+
 ### Added
 
-- Dependabot configuration covering npm, cargo, gomod, Docker and
-  GitHub Actions manifests (`.github/dependabot.yml`)
-- Workflow-level least-privilege `permissions` block in the CI workflow
-- `CONTRIBUTING.md` with repository conventions
-- This changelog
+- `.github/dependabot.yml` — weekly updates for npm, cargo, gomod, Docker
+  and GitHub Actions manifests, with minor/patch grouping
+- Community health files: `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1),
+  `SECURITY.md`, YAML issue templates and a pull request template
+- `CONTRIBUTING.md` documenting repository conventions
+- This changelog (Keep a Changelog format, with retroactive 1.0.0/1.1.0
+  entries)
+- **Example 10 is now a real project**: a hand-minimized Blazor WebAssembly
+  SPA (`BlazorExample/`, SDK-only, no AOT) with `build.sh` and a `test.mjs`
+  that asserts both the .NET runtime and the app's C# assembly ship as
+  actual `.wasm` modules (magic-byte check); built and tested in CI on
+  ubuntu + windows
+- Turkish documentation served on GitHub Pages (`docs/tr` → `/docs/tr/`)
+  with a per-chapter EN⇄TR switch in the docs navigation
+- `.editorconfig` for the multi-language tree
+
+### Changed
+
+- All GitHub Actions pinned to commit SHAs with version comments
+  (Dependabot keeps them updated)
+- CI now tests the Go floor declared in `go.mod` (1.21) instead of 1.22
+- Pages index template moved from `.github/` to `scripts/templates/`
 
 ### Fixed
 
 - LICENSE now names the copyright holder
+- Stale wasm-bindgen version reference in `examples/README.md`
+
+### Security
+
+- Workflow-level least-privilege `permissions` block in the CI workflow
+  (matching `pages.yml` and `docker.yml`)
 
 ## [1.1.0] — 2026-09-28
 
@@ -49,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker image running the WASI example under wasmtime (FROM scratch runtime)
 - GitHub Pages deployment with live browser demos (07-web-demo, 18-jspi)
 
-[Unreleased]: https://github.com/kefyusuf/webassembly-guide/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/kefyusuf/webassembly-guide/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/kefyusuf/webassembly-guide/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kefyusuf/webassembly-guide/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kefyusuf/webassembly-guide/releases/tag/v1.0.0
