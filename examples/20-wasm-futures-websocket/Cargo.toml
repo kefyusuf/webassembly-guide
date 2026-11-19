@@ -1,0 +1,17 @@
+[package]
+name = "wasm_futures_ws"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# Must match the wasm-bindgen-cli version used in build.sh, exactly (see 14).
+wasm-bindgen = "=0.2.130"
+# The async ↔ JS-promise bridge: async fn exports become JS Promises, and
+# JS Promises become awaitable Rust futures (JsFuture).
+wasm-bindgen-futures = "0.4.80"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["WebSocket", "MessageEvent", "ErrorEvent"] }

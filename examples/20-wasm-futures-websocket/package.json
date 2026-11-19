@@ -1,0 +1,9 @@
+{
+  "name": "wasm-futures-websocket",
+  "private": true,
+  "type": "module",
+  "description": "Example 20 — async Rust client over WebSocket; the test's echo server (dev only)",
+  "devDependencies": {
+    "ws": "^8.18.0"
+  }
+}
