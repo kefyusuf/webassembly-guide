@@ -1,0 +1,10 @@
+// A WASI 0.3 command component with a native async entry point.
+// `wasi:cli/run@0.3.0` replaces the 0.2 sync run — the host (wasmtime 46+)
+// awaits the guest's async future through the canonical-ABI task system.
+// External WIT packages (wasi:cli@0.3.0) are fetched by `wkg wit fetch`
+// into wit/deps (build step).
+package guide:wasi03;
+
+world wasi03-async {
+    export wasi:cli/run@0.3.0;
+}

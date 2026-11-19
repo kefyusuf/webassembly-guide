@@ -15,6 +15,9 @@ main.wasm
 __pycache__/
 .venv/
 
+# WIT deps fetched by `wkg wit fetch` (example 19)
+wit/deps/
+
 # .NET (example 10)
 bin/
 obj/

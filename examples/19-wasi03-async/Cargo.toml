@@ -1,0 +1,13 @@
+[package]
+name = "wasi03_async"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# The `async` feature turns on wit-bindgen's async code generation — needed
+# for the `async func` signatures in wit/world.wit (WASI 0.3 style).
+wit-bindgen = { version = "0.63", features = ["async"] }
