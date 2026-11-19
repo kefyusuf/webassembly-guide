@@ -37,7 +37,7 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
         with:
-          targets: wasm32-unknown-unknown,wasm32-wasip1,wasm32-wasip1-threads,wasm32-wasip2
+          targets: wasm32-unknown-unknown,wasm32-wasip1,wasm32-wasip1-threads,wasm32-wasip2,wasm32-wasip3
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -159,6 +159,23 @@ jobs:
       - name: Example 18 — JSPI
         working-directory: examples/18-jspi
         run: |
+          bash build.sh
+          node test.mjs
+
+      # 19 — WASI 0.3 native async (wasm32-wasip3, Tier 2; needs Rust 1.100+,
+      #      wkg for WIT deps, pinned wasmtime 49 — installed by build.sh)
+      - name: Example 19 — WASI 0.3 async
+        working-directory: examples/19-wasi03-async
+        run: |
+          bash build.sh
+          node test.mjs
+
+      # 20 — wasm-bindgen-futures over WebSocket (Node 26 native WebSocket
+      #      client against a real `ws` echo server)
+      - name: Example 20 — futures + WebSocket
+        working-directory: examples/20-wasm-futures-websocket
+        run: |
+          npm install --no-fund --no-audit
           bash build.sh
           node test.mjs
 

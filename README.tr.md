@@ -44,6 +44,8 @@
 | 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Senkron çekirdek çevresinde async + doğrulanmış WASI 0.3 durumu |
 | 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: doğrulanmış tam npm paket yaşam döngüsü |
 | 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | JS promise'lerini bekleyen senkron wasm ([canlı demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
+| 19 | [examples/19-wasi03-async](examples/19-wasi03-async/) | Rust (wasm32-wasip3) | WASI 0.3 native async — component'in async `run()`'ı wasmtime tarafından canonical task sistemiyle 5 kez askıya alınıp sürülüyor, threadsiz |
+| 20 | [examples/20-wasm-futures-websocket](examples/20-wasm-futures-websocket/) | Rust + web-sys | wasm-bindgen-futures: JS promise'leri bekleyen async Rust, gerçek WebSocket istemcisi |
 
 Örneklerin hepsi CI'da ubuntu **ve** windows üzerinde derlenip test edilir (06'nın Emscripten derlemesi CI'da yalnızca Linux'ta; 10'un çıktısı .NET runtime'ı ve C# assembly'sinin Wasm magic byte'larına kadar doğrulanır). Çapraz-dil benchmark `bench/` altındadır.
 
@@ -56,7 +58,7 @@
 - **Ne değildir?** JavaScript'in yerine geçmez; JS ile birlikte çalışır (Wasm DOM'a doğrudan erişemez).
 - **Neden var?** Tarayıcıya performanslı ve güvenli kod taşımak için doğdu; bugün bulut/edge tarafına da taşındı.
 - **Kimler kullanıyor?** Figma, Google Earth, Photoshop for Web, AutoCAD, Unity, Cloudflare Workers, Fastly, Shopify Functions, Ethereum/Polkadot istemcileri…
-- **Standart durumu (2026):** [WebAssembly 3.0](https://www.w3.org/2025/09/pressrelease-wasm-rec.html.tr) 2025'te W3C standardı oldu (GC, SIMD, memory64 dahil); WASI 0.3 native async I/O getirerek sunucu tarafını olgunlaştırdı.
+- **Standart durumu (2026):** [WebAssembly 3.0](https://www.w3.org/2025/09/pressrelease-wasm-rec.html.tr) 2025'te W3C standardı oldu (GC, SIMD, memory64 dahil); WASI 0.3 (2026) async'i component model'e taşıdı — [örnek 19](examples/19-wasi03-async/)'da derlenip CI'da doğrulanıyor.
 
 ---
 

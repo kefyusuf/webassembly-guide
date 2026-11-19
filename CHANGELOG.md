@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Example 19 — WASI 0.3 native async** (`examples/19-wasi03-async/`): a
+  `wasm32-wasip3` command component whose async `run()` is suspended and
+  resumed five times by wasmtime 49 through the canonical task system —
+  no threads (wit-bindgen 0.63 `async` feature, `wkg`-fetched WIT deps)
+- **Example 20 — wasm-bindgen-futures + WebSocket**
+  (`examples/20-wasm-futures-websocket/`): async Rust exported as JS
+  promises driving a real WebSocket client (`echo_roundtrip`, `delay`),
+  CI-tested against a Node `ws` echo server including the rejection path
+
 ## [1.2.0] — 2026-11-19
 
 ### Added

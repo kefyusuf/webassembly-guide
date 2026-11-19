@@ -48,6 +48,8 @@
 | 16 | [examples/16-async](examples/16-async/) | Rust + Node workers | Async around a synchronous core + verified WASI 0.3 async status |
 | 17 | [examples/17-wasm-pack](examples/17-wasm-pack/) | Rust → npm | wasm-pack: the full npm package lifecycle, verified without publishing |
 | 18 | [examples/18-jspi](examples/18-jspi/) | WAT + JSPI | Synchronous wasm that awaits JS promises ([live demo](https://kefyusuf.github.io/webassembly-guide/18-jspi/)) |
+| 19 | [examples/19-wasi03-async](examples/19-wasi03-async/) | Rust (wasm32-wasip3) | WASI 0.3 native async — wasmtime suspends/resumes the component's async `run()` 5× through the canonical task system, no threads |
+| 20 | [examples/20-wasm-futures-websocket](examples/20-wasm-futures-websocket/) | Rust + web-sys | wasm-bindgen-futures: async Rust ⇄ JS promises driving a real WebSocket client |
 
 Every example is built and tested in CI on ubuntu **and** windows (06's Emscripten compile is Linux-only there; 10's bundle is verified down to the Wasm magic bytes of the .NET runtime and the C# assembly). A cross-language benchmark lives in [bench/](bench/).
 
@@ -71,7 +73,7 @@ Every example is built and tested in CI on ubuntu **and** windows (06's Emscript
 - **It is not** a JavaScript replacement; it works *with* JS (Wasm cannot touch the DOM directly — every UI interaction crosses a JS bridge).
 - **Why does it exist?** Born to bring high-performance code to the web; now carried into cloud/edge with a "compile once, run anywhere (safely and fast)" promise.
 - **Who uses it?** Figma, Google Earth, Photoshop for Web, AutoCAD, Unity, Cloudflare Workers, Fastly, Shopify Functions, Ethereum/Polkadot clients, and many more.
-- **Standard status (2026):** [WebAssembly 3.0](https://www.w3.org/2025/09/pressrelease-wasm-rec.html.tr) became a W3C standard in 2025 (GC, SIMD, memory64 and more); WASI 0.3 landed with native async I/O, maturing the server side.
+- **Standard status (2026):** [WebAssembly 3.0](https://www.w3.org/2025/09/pressrelease-wasm-rec.html.tr) became a W3C standard in 2025 (GC, SIMD, memory64 and more); WASI 0.3 (2026) moved async into the component model — now compilable and CI-verified in [example 19](examples/19-wasi03-async/).
 
 ---
 

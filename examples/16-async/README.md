@@ -27,17 +27,22 @@ The pattern is identical in browsers: `new Worker()` + `postMessage` (or a `Mess
 2. **Workers are today's answer** — same module bytes, no code changes; the main thread stays responsive.
 3. **BigInt crossing** — Rust's `u64` returns arrive as JS `BigInt`; structured clone handles them across workers too.
 
-## WASI 0.3 async — the *real* future, verified status (September 2026)
+## WASI 0.3 async — the gap this example documented is now closed
 
-WASI 0.3 adds native async: components can export `async func`s, hosts await them without burning threads. Where does it actually stand?
+When this example was written (September 2026), WASI 0.3's native async had
+no compilable guest toolchain — this section documented that gap honestly.
+**It no longer holds:** `wasm32-wasip3` is Tier 2, stable since Rust 1.100
+(2026-11-12), and wasmtime 46+ runs the final 0.3.0 spec. The async-export
+version of this demo now lives in **[example 19](../19-wasi03-async/)** — a
+CI-verified component whose async `run()` suspends five times through the
+canonical task system, no threads.
 
-| Piece | Status |
+| Piece | Status (November 2026) |
 |---|---|
-| Specification | WASI 0.3 published with native async/await |
-| **wasmtime** | WASI 0.3 support present (`wasi:cli@0.3.x`) |
-| **Rust guest toolchain** | ❌ no `wasm32-wasip3` target yet (stable *or* nightly manifest); the `wasi` crate is still 0.2.x |
-| Other languages | same story — p2 is the ceiling for guest compilers today |
+| Specification | WASI 0.3.0 ratified (2026-06-11) — async in the canonical ABI |
+| **wasmtime** | final 0.3.0 support since v46 (this repo pins v49) |
+| **Rust guest toolchain** | ✅ `wasm32-wasip3` Tier 2, stable Rust 1.100+ |
+| Browser side | JSPI shipped in Chrome/Edge 137+ (see [example 18](../18-jspi/)) |
 
-**Conclusion:** there is no guest toolchain to compile an honest WASI 0.3 async example with yet — so this example teaches the async pattern that *is* production-ready, and this section documents the gap instead of pretending. When `wasm32-wasip3` lands, the async-export version of this demo goes here.
-
-For the browser-side future, watch **JSPI** (JavaScript Promise Integration) — it lets synchronous Wasm call async JS APIs without workers; still behind flags in major browsers at the time of writing.
+For the browser side of the async story, see [example 18 (JSPI)](../18-jspi/)
+and [example 20 (wasm-bindgen-futures)](../20-wasm-futures-websocket/).

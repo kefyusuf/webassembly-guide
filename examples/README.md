@@ -22,6 +22,8 @@ Each folder has its own README. The numbers suggest a reading order.
 | 16 | [16-async](16-async/) | Node worker_threads + example 02 module | Node.js; example 02 built | ✅ tested (freeze/no-freeze measured) |
 | 17 | [17-wasm-pack](17-wasm-pack/) | Rust → wasm-pack 0.15 → npm pkg | rustup; wasm-pack (auto-downloaded) | ✅ tested (pack → install → consume) |
 | 18 | [18-jspi](18-jspi/) | WAT → wasm-tools + JSPI | Node 26+ or Chrome/Edge 137+ | ✅ tested in Node 26 (suspension measured) |
+| 19 | [19-wasi03-async](19-wasi03-async/) | Rust → wasm32-wasip3 (WASI 0.3) | Rust 1.100+; wkg; pinned wasmtime 49 (auto-installed) | ✅ tested (async `run()` suspended/resumed 5× via canonical task.yield) |
+| 20 | [20-wasm-futures-websocket](20-wasm-futures-websocket/) | Rust → wasm-bindgen-futures + web-sys | Node 26+ (native WebSocket); `ws` dev-dep | ✅ tested (real echo server, event-loop suspension measured, rejection path) |
 
 ## General notes
 
